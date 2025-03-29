@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "target": "ESNext",        // Modern JavaScript target
+    "module": "ESNext",        // Use ES modules
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "resolveJsonModule": true,
+    "allowSyntheticDefaultImports": true,
+    "strict": true,
+    "outDir": "./dist",        // Output directory for compiled files
+    "skipLibCheck": true
+  },
+  "include": ["src/**/*"],
+  "exclude": ["node_modules"]
+}

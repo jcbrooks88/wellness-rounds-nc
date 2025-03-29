@@ -1,0 +1,16 @@
+{
+    "compilerOptions": {
+      "types": ["vite/client"],
+      "target": "ESNext",
+      "module": "ESNext",
+      "moduleResolution": "node",
+      "strict": true,
+      "jsx": "react-jsx",
+      "esModuleInterop": true,
+      "resolveJsonModule": true,
+      "allowSyntheticDefaultImports": true,
+      "forceConsistentCasingInFileNames": true
+    }
+  }
+  
+  
