@@ -1,0 +1,4 @@
+{
+    "exec": "node --loader ts-node/esm"
+  }
+  

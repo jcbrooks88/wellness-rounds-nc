@@ -1,27 +1,59 @@
 import express from "express";
 import { ApolloServer } from "apollo-server-express";
-import db from "./config/connection.js";
-import typeDefs from "./schemas/typeDefs.js";
-import resolvers from "./schemas/resolvers.js";
-import { authMiddleware } from "./middleware/auth.js";
+import seedDiscussions from "./seed/seedDiscussions.js";
+import connectDB from "./config/connection.js";
+import userTypeDefs from "./schemas/userSchema.js";
+import userResolvers from "./resolvers/userResolvers.js";
+import discussionTypeDefs from "./schemas/discussionSchema.js";
+import discussionResolvers from "./resolvers/discussionResolvers.js";
+import { authMiddleware } from "./middleware/authMiddleware.js";
 import dotenv from "dotenv";
+// Use lodash.merge to combine resolvers cleanly
+import merge from "lodash.merge";
 
 dotenv.config();
 
 const app = express();
-const server = new ApolloServer({
-  typeDefs,
-  resolvers,
-  context: authMiddleware,
+const PORT = process.env.PORT || 4000;
+
+app.use(express.json());
+
+// ✅ Fix CORS issue
+app.use((_req, res, next) => {
+  res.setHeader("Access-Control-Allow-Origin", "http://localhost:5173");
+  res.setHeader("Access-Control-Allow-Credentials", "true");
+  res.setHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
+  next();
 });
 
-async function startServer() {
-  await server.start();
-  server.applyMiddleware({ app });
+// ✅ Combine typeDefs and resolvers
+const typeDefs = [userTypeDefs, discussionTypeDefs];
+const resolvers = merge(userResolvers, discussionResolvers);
 
-  db().then(() => {
-    app.listen(4000, () => console.log(`Server running at http://localhost:4000${server.graphqlPath}`));
-  });
+async function startServer() {
+  try {
+    await connectDB();
+    console.log("✅ MongoDB Ready");
+
+    await seedDiscussions();
+    console.log("🌱 Database seeding completed");
+
+    const server = new ApolloServer({
+      typeDefs,
+      resolvers,
+      context: ({ req }) => authMiddleware({ req }),
+    });
+
+    await server.start();
+    server.applyMiddleware({ app, path: "/graphql" });
+
+    app.listen(PORT, () => {
+      console.log(`🚀 Server running at http://localhost:${PORT}${server.graphqlPath}`);
+    });
+  } catch (error) {
+    console.error("❌ Server startup error:", error);
+  }
 }
 
 startServer();
