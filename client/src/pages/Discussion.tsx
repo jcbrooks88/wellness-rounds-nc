@@ -8,6 +8,7 @@ import { gql } from "@apollo/client";
 const GET_DISCUSSIONS_QUERY = gql`
   query {
     discussions {
+      _id
       title
       content
       keywords

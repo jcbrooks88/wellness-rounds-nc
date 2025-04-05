@@ -9,9 +9,11 @@ const discussionTypeDefs = gql`
     author: User
   }
 
-  extend type Query {
-    discussions: [Discussion]
-  }
+extend type Query {
+  discussions: [Discussion]
+  searchDiscussions(title: String!, keywords: [String]!): [Discussion]
+}
+
 
   extend type Mutation {
     createDiscussion(title: String!, content: String!, keywords: [String]!): Discussion

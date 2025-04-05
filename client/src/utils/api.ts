@@ -1,8 +1,10 @@
 import client from '../apolloClient';
-import { gql } from "@apollo/client";
 import { DocumentNode } from "@apollo/client";
 
-export const graphqlRequest = async (query: DocumentNode, variables: Record<string, any> = {}) => {
+export const graphqlRequest = async (
+  query: DocumentNode,
+  variables: Record<string, any> = {}
+) => {
   try {
     const result = await client.query({
       query,
@@ -16,10 +18,13 @@ export const graphqlRequest = async (query: DocumentNode, variables: Record<stri
   }
 };
 
-export const graphqlMutation = async (mutation: string, variables: Record<string, any> = {}) => {
+export const graphqlMutation = async (
+  mutation: DocumentNode,
+  variables: Record<string, any> = {}
+) => {
   try {
     const result = await client.mutate({
-      mutation: gql(mutation),
+      mutation,
       variables,
     });
 
