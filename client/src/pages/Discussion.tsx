@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
-// import DiscussionForm from "../components/discussions/DiscussionForm";
 import Discussions from "../components/discussions/Discussions";
 import SearchBar from "../components/discussions/SearchBar";
+import SearchResults from "../components/discussions/SearchResults";
 import { graphqlRequest } from "../utils/api";
 import { gql } from "@apollo/client";
 
@@ -21,6 +21,7 @@ const GET_DISCUSSIONS_QUERY = gql`
 
 export default function DiscussionPage() {
   const [discussions, setDiscussions] = useState<any[]>([]);
+  const [hasSearched, setHasSearched] = useState(false);
 
   useEffect(() => {
     async function fetchDiscussions() {
@@ -35,13 +36,19 @@ export default function DiscussionPage() {
     fetchDiscussions();
   }, []);
 
+  const handleSearchResults = (results: any[]) => {
+    setDiscussions(results);
+    setHasSearched(true); // toggle visibility of DiscussionResults
+  };
 
   return (
     <div>
       <h1>Discussions</h1>
-      <SearchBar onResults={(results) => setDiscussions(results)} />
-      
-      <Discussions discussions={discussions} /> {/* Use the Discussions component here */}
+      <SearchBar onResults={handleSearchResults} />
+
+      {hasSearched && <SearchResults />} {/* Show after search */}
+
+      <Discussions discussions={discussions} />
     </div>
   );
 }

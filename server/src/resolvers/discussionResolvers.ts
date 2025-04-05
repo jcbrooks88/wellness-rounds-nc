@@ -4,13 +4,21 @@ import { GraphQLError } from "graphql";
 const discussionResolvers = {
   Query: {
     discussions: async () => await Discussion.find().populate("author"),
-    searchDiscussions: async (_: any, { title, keywords }: any) => {
-      return await Discussion.find({
-        title: { $regex: title, $options: "i" },
-        keywords: { $in: keywords },
-      }).populate("author");
-    },    
+    searchDiscussions: async (_: any, { title = "", keywords = [] }: any) => {
+      const query: any = {};
+    
+      if (title.trim() !== "") {
+        query.title = { $regex: title, $options: "i" };
+      }
+    
+      if (keywords.length > 0) {
+        query.keywords = { $in: keywords };
+      }
+    
+      return await Discussion.find(query).populate("author");
+    }
   },
+
   Mutation: {
     createDiscussion: async (_: any, { title, content, keywords }: any, { user }: any) => {
       if (!user) throw new GraphQLError("Unauthorized", { extensions: { code: "UNAUTHORIZED" } } as any);

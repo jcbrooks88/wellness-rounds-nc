@@ -1,6 +1,6 @@
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { graphqlRequest } from "../utils/api";
+import { graphqlRequest } from "../../utils/api";
 import { gql } from "@apollo/client";
 
 const GET_DISCUSSION_QUERY = gql`
@@ -16,7 +16,7 @@ const GET_DISCUSSION_QUERY = gql`
   }
 `;
 
-export default function DiscussionResults() {
+export default function SearchResults() {
   const { id } = useParams<{ id: string }>();
   const [discussion, setDiscussion] = useState<any>(null);
 

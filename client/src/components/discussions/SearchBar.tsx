@@ -50,17 +50,26 @@ export default function SearchBar({ onResults }: SearchBarProps) {
     const delaySearch = setTimeout(async () => {
       setLoading(true);
       setError(null);
+
       try {
+        // Match input to known keywords (case-insensitive)
+        const matchedKeywords = keywordOptions.filter((k) =>
+          k.toLowerCase().includes(query.toLowerCase())
+        );
+
         const data = await graphqlRequest(SEARCH_DISCUSSIONS_QUERY, {
-          title: query,
-          keywords: [query],
+          title: query, // still enables partial title match
+          keywords: matchedKeywords, // dynamic keyword filtering
         });
+
         setResults(data.searchDiscussions);
         onResults?.(data.searchDiscussions);
       } catch (err) {
+        console.error("Search error:", err);
         setError("Error fetching search results.");
         onResults?.([]);
       }
+
       setLoading(false);
     }, 500);
 
@@ -72,7 +81,9 @@ export default function SearchBar({ onResults }: SearchBarProps) {
     setQuery(value);
     setFilteredKeywords(
       value
-        ? keywordOptions.filter((k) => k.toLowerCase().includes(value.toLowerCase()))
+        ? keywordOptions.filter((k) =>
+            k.toLowerCase().includes(value.toLowerCase())
+          )
         : []
     );
   };
@@ -90,13 +101,15 @@ export default function SearchBar({ onResults }: SearchBarProps) {
     <div style={{ padding: "1rem" }}>
       <input
         type="text"
-        placeholder="Search by keyword..."
+        placeholder="Search by keyword or title..."
         value={query}
         onChange={handleInputChange}
         style={{ width: "100%", padding: "8px", borderRadius: "4px" }}
       />
+
       {loading && <p>Loading...</p>}
       {error && <p style={{ color: "red" }}>{error}</p>}
+
       {filteredKeywords.length > 0 && (
         <ul style={{ listStyle: "none", padding: 0 }}>
           {filteredKeywords.map((keyword) => (
@@ -117,8 +130,16 @@ export default function SearchBar({ onResults }: SearchBarProps) {
           ))}
         </ul>
       )}
+
       {results.length > 0 && (
-        <div style={{ marginTop: "1rem", display: "flex", flexWrap: "wrap", gap: "1rem" }}>
+        <div
+          style={{
+            marginTop: "1rem",
+            display: "flex",
+            flexWrap: "wrap",
+            gap: "1rem"
+          }}
+        >
           {results.map((discussion) => (
             <div
               key={discussion._id}
@@ -135,7 +156,6 @@ export default function SearchBar({ onResults }: SearchBarProps) {
               <p style={{ fontSize: "0.85rem", color: "#666" }}>
                 By {discussion.author?.username ?? "Unknown"}
               </p>
-
               <p>{discussion.content.slice(0, 60)}...</p>
             </div>
           ))}
