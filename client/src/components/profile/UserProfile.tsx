@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useAuth } from "../../context/AuthContext"; // Updated to use useAuth hook
 import { graphqlRequest } from "../../utils/api";
+import { gql } from "graphql-tag";
 
-const GET_USER_QUERY = `
+const GET_USER_QUERY = gql`
   query {
     me {
       _id
@@ -27,7 +28,7 @@ const Profile: React.FC = () => {
 
       try {
         const headers = token ? { Authorization: `Bearer ${token}` } : {}; // Use token from context
-        const data = await graphqlRequest(GET_USER_QUERY, {}, headers);
+        const data = await graphqlRequest(GET_USER_QUERY, { headers });
         if (data?.me) {
           setUserData(data.me);
         }

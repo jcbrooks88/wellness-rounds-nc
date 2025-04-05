@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import DiscussionForm from "../components/discussions/DiscussionForm";
+// import DiscussionForm from "../components/discussions/DiscussionForm";
 import Discussions from "../components/discussions/Discussions";
 import SearchBar from "../components/discussions/SearchBar";
 import { graphqlRequest } from "../utils/api";
@@ -34,15 +34,12 @@ export default function DiscussionPage() {
     fetchDiscussions();
   }, []);
 
-  const handleNewDiscussion = (newDiscussion: any) => {
-    setDiscussions((prev) => [newDiscussion, ...prev]); // Update state with new discussion
-  };
 
   return (
     <div>
       <h1>Discussions</h1>
       <SearchBar onResults={(results) => setDiscussions(results)} />
-      <DiscussionForm onDiscussionCreated={handleNewDiscussion} />
+      
       <Discussions discussions={discussions} /> {/* Use the Discussions component here */}
     </div>
   );

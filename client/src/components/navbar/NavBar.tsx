@@ -20,10 +20,10 @@ const NavBar: React.FC = () => {
           </Link>
         </li>
         <li style={liStyle}>
-          <Link to="/contact" style={linkStyle}>
-            Contact
-          </Link>
-        </li>
+              <Link to="/login" style={linkStyle}>
+                Login
+              </Link>
+            </li>
 
         {user ? (
           <>
@@ -51,11 +51,6 @@ const NavBar: React.FC = () => {
             <li style={liStyle}>
               <Link to="/login" style={linkStyle}>
                 Login
-              </Link>
-            </li>
-            <li style={liStyle}>
-              <Link to="/signup" style={linkStyle}>
-                Signup
               </Link>
             </li>
           </>

@@ -16,16 +16,33 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   useEffect(() => {
     const token = localStorage.getItem("token");
+  
     if (token) {
       try {
-        const decodedUser = jwtDecode(token);
-        setUser(decodedUser);
+        const decoded: any = jwtDecode(token);
+        const currentTime = Date.now() / 1000; // in seconds
+  
+        if (decoded.exp < currentTime) {
+          // Token has already expired
+          logout();
+        } else {
+          setUser(decoded);
+  
+          // Set timeout to auto-logout when token expires
+          const timeout = setTimeout(() => {
+            logout();
+          }, (decoded.exp - currentTime) * 1000); // Convert to ms
+  
+          // Cleanup on unmount or token change
+          return () => clearTimeout(timeout);
+        }
       } catch (error) {
         console.error("Invalid token");
         logout();
       }
     }
   }, []);
+  
 
   const login = (token: string) => {
     localStorage.setItem("token", token);
