@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContext";
-import LogoutButton from "../login/LogoutButton"; // Import the new LogoutButton component
+import LogoutButton from "../login/LogoutButton";
 
 const NavBar: React.FC = () => {
   const { user } = useContext(AuthContext)!;
@@ -19,11 +19,6 @@ const NavBar: React.FC = () => {
             About
           </Link>
         </li>
-        <li style={liStyle}>
-              <Link to="/login" style={linkStyle}>
-                Login
-              </Link>
-            </li>
 
         {user ? (
           <>
@@ -47,19 +42,18 @@ const NavBar: React.FC = () => {
             </li>
           </>
         ) : (
-          <>
-            <li style={liStyle}>
-              <Link to="/login" style={linkStyle}>
-                Login
-              </Link>
-            </li>
-          </>
+          <li style={liStyle}>
+            <Link to="/login" style={linkStyle}>
+              Login
+            </Link>
+          </li>
         )}
       </ul>
     </nav>
   );
 };
 
+// Styles
 const navStyle = {
   backgroundColor: "#333",
   padding: "10px 20px",
