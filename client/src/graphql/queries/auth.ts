@@ -15,3 +15,27 @@ export const SIGNUP_MUTATION = gql`
     }
   }
 `;
+
+export const GET_ALL_POSTS = gql`
+  query GetAllPosts {
+    getAllPosts {
+      _id
+      title
+      content
+      createdAt
+      author {
+        _id
+        name
+      }
+      comments {
+        _id
+        content
+        createdAt
+        author {
+          _id
+          name
+        }
+      }
+    }
+  }
+`;
