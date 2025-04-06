@@ -1,6 +1,13 @@
-import User, { IUser } from "../models/User.js";
+import { User } from "../models/User.js";
 import { signToken } from "../middleware/authMiddleware.js";
 import { AuthenticationError } from "apollo-server-express";
+
+interface IUser {
+  _id: string;
+  username: string;
+  email: string;
+  isCorrectPassword?: (password: string) => Promise<boolean>;
+}
 
 const userResolvers = {
   Query: {
@@ -30,7 +37,9 @@ const userResolvers = {
 
     login: async (_: any, { email, password }: { email: string; password: string }) => {
       const user: IUser | null = await User.findOne({ email });
-      if (!user || !(await user.isCorrectPassword(password))) throw new AuthenticationError("Invalid credentials");
+      if (!user || !user.isCorrectPassword || !(await user.isCorrectPassword(password))) {
+        throw new AuthenticationError("Invalid credentials");
+      }
 
       const token = signToken({ _id: (user._id as unknown as string).toString(), username: user.username, email: user.email });
       return { token, user };

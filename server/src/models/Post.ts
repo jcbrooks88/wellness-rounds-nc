@@ -1,16 +1,24 @@
-import mongoose from 'mongoose';
+import mongoose, { Schema, Types, Document } from 'mongoose';
 
-const postSchema = new mongoose.Schema(
+
+export interface IPost extends Document {
+  title: string;
+  content: string;
+  author: Types.ObjectId;
+  comments: Types.ObjectId[]; // ✅ Tell TypeScript this is an array of ObjectId
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+const postSchema = new Schema<IPost>(
   {
     title: { type: String, required: true },
     content: { type: String, required: true },
-    author: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
-    comments: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Comment' }],
-    createdAt: { type: Date, default: Date.now },
+    author: { type: Schema.Types.ObjectId, ref: 'User', required: true },
+    comments: [{ type: Schema.Types.ObjectId, ref: 'Comment' }], // ✅ Match the type
   },
   { timestamps: true }
 );
 
-const Post = mongoose.model('Post', postSchema);
-
-export default Post;
+const Post = mongoose.model<IPost>('Post', postSchema);
+export default Post; // ✅ Use default export

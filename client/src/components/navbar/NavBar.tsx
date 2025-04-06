@@ -33,6 +33,11 @@ const NavBar: React.FC = () => {
               </Link>
             </li>
             <li style={liStyle}>
+              <Link to="/timeline" style={linkStyle}>
+                Timeline
+              </Link>
+            </li>
+            <li style={liStyle}>
               <Link to="/discussion" style={linkStyle}>
                 Discussions
               </Link>
