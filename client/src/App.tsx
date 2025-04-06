@@ -25,8 +25,8 @@ const App = () => {
             <Route path="/signup" element={<SignupPage />} />
             <Route path="/about" element={<AboutPage />} />
             <Route path="/contact" element={<ContactPage />} />
-            <Route path="/discussion" element={<DiscussionPage />} />
-            <Route path="/discussions/:id" element={<DiscussionResults />} />
+            <Route path="/discussion" element={<ProtectedRoute><DiscussionPage /></ProtectedRoute>} />
+            <Route path="/discussions/:id" element={<ProtectedRoute><DiscussionResults /></ProtectedRoute>} />
             <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
             <Route path="/profile" element={<ProtectedRoute><ProfilePage /></ProtectedRoute>} />
             <Route path="*" element={<LoginPage />} />

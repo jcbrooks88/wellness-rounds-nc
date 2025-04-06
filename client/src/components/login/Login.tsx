@@ -13,7 +13,7 @@ const Login = () => {
   const [loginUser, { loading, error }] = useMutation(LOGIN_MUTATION, {
     onCompleted: (data) => {
       login(data.login.token);
-      navigate("/dashboard");
+      navigate("/");
     },
   });
 
