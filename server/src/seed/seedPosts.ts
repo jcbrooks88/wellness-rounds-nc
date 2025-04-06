@@ -1,9 +1,10 @@
-import connectDB from '../config/connection';
-import { User } from '../models/User';
-import Post from '../models/Post';
-import { Comment } from '../models/Comment';
+import connectDB from '../config/connection.ts';
+import { User } from '../models/User.ts';
+import Post from '../models/Post.ts';
+import { Comment } from '../models/Comment.ts';
+import { IPost } from '../models/Post.ts';
 
-export const seedPost = async () => {
+const seedPost = async () => {
   try {
     await connectDB();
     console.log('🌱 MongoDB connected');
@@ -72,7 +73,7 @@ export const seedPost = async () => {
     const [jeffery, jeff, darlene, brian, derek] = users;
 
     // Seed posts
-    const posts = await Post.insertMany([
+    const posts: IPost[] = await Post.insertMany([
       {
         title: 'Getting Started with MERN',
         content: 'The MERN stack is a powerful way to build full-stack applications.',

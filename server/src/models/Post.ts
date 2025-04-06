@@ -5,7 +5,7 @@ export interface IPost extends Document {
   title: string;
   content: string;
   author: Types.ObjectId;
-  comments: Types.ObjectId[]; // ✅ Tell TypeScript this is an array of ObjectId
+  comments: Types.ObjectId[];
   createdAt: Date;
   updatedAt: Date;
 }
