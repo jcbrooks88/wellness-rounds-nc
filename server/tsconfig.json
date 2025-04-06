@@ -9,7 +9,7 @@
     "strict": true,
     "outDir": "./dist",        // Output directory for compiled files
     "skipLibCheck": true,
-    "rootDir": "src",
+    "rootDir": "./src",
     "allowImportingTsExtensions": true,
     "noEmit": true
   },

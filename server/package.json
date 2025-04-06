@@ -2,15 +2,15 @@
   "name": "server",
   "version": "1.0.0",
   "main": "index.js",
-"scripts": {
-  "start": "node dist/server.js",
-  "prestart": "npm run build",
-  "dev": "nodemon --watch src --ext ts --exec \"node --loader ts-node/esm src/server.ts\"",
-  "build": "tsc",
-  "serve": "node dist/server.js",
-  "clean": "rm -rf dist",
-  "test": "echo \"No tests yet\""
-},
+  "scripts": {
+    "start": "node dist/server.js",
+    "prestart": "npm run build",
+    "dev": "nodemon --watch src --ext ts --exec \"node --loader ts-node/esm src/server.ts\"",
+    "build": "tsc",
+    "serve": "node dist/server.js",
+    "clean": "rm -rf dist",
+    "test": "echo \"No tests yet\""
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
@@ -25,6 +25,7 @@
     "graphql": "^15.8.0",
     "jsonwebtoken": "^9.0.2",
     "lodash.merge": "^4.6.2",
+    "mongodb": "^6.15.0",
     "mongoose": "^8.13.1"
   },
   "devDependencies": {
