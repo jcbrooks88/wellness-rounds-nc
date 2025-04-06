@@ -1,4 +1,4 @@
-import Discussion from "../models/Discussion.ts";
+import Discussion from "../models/Discussion";
 import { GraphQLError } from "graphql";
 
 const discussionResolvers = {

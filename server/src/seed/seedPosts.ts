@@ -1,8 +1,8 @@
-import connectDB from '../config/connection.ts';
-import { User } from '../models/User.ts';
-import Post from '../models/Post.ts';
-import { Comment } from '../models/Comment.ts';
-import { IPost } from '../models/Post.ts';
+import connectDB from '../config/connection';
+import { User } from '../models/User';
+import Post from '../models/Post';
+import { Comment } from '../models/Comment';
+import { IPost } from '../models/Post';
 
 const seedPost = async () => {
   try {

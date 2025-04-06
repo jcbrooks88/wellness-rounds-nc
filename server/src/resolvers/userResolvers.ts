@@ -1,5 +1,5 @@
-import { User } from "../models/User.ts";
-import { signToken } from "../middleware/authMiddleware.ts";
+import { User } from "../models/User";
+import { signToken } from "../middleware/authMiddleware";
 import { AuthenticationError } from "apollo-server-express";
 
 interface IUser {

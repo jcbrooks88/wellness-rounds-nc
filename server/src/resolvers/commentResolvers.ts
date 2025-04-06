@@ -1,5 +1,5 @@
-import { Comment } from '../models/Comment.ts';
-import Post from '../models/Post.ts';
+import { Comment } from '../models/Comment';
+import Post from '../models/Post';
 import mongoose from 'mongoose';
 
 

@@ -1,4 +1,4 @@
-import Discussion from "../models/Discussion.ts";
+import Discussion from "../models/Discussion";
 
 const seedDiscussions = async () => {
   try {

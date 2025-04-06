@@ -1,17 +1,15 @@
 {
   "compilerOptions": {
-    "target": "ESNext",        // Modern JavaScript target
-    "module": "ESNext",        // Use ES modules
+    "target": "ESNext",
+    "module": "ESNext",
     "moduleResolution": "node",
     "esModuleInterop": true,
     "resolveJsonModule": true,
     "allowSyntheticDefaultImports": true,
     "strict": true,
-    "outDir": "./dist",        // Output directory for compiled files
+    "outDir": "./dist",
     "skipLibCheck": true,
-    "rootDir": "./src",
-    "allowImportingTsExtensions": true,
-    "noEmit": true
+    "rootDir": "./src"
   },
   "include": ["src/**/*"],
   "exclude": ["node_modules"]
