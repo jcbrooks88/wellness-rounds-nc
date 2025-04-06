@@ -1,16 +1,16 @@
 import express from "express";
 import { ApolloServer } from "apollo-server-express";
-import seedDiscussions from "./seed/seedDiscussions";
-import seedPost from "./seed/seedPosts";
-import connectDB from "./config/connection";
-import userTypeDefs from "./schemas/userSchema";
-import userResolvers from "./resolvers/userResolvers";
-import discussionTypeDefs from "./schemas/discussionSchema";
-import discussionResolvers from "./resolvers/discussionResolvers";
-import { authMiddleware } from "./middleware/authMiddleware";
+import seedDiscussions from "./seed/seedDiscussions.js";
+import seedPost from "./seed/seedPosts.js";
+import connectDB from "./config/connection.js";
+import userTypeDefs from "./schemas/userSchema.js";
+import userResolvers from "./resolvers/userResolvers.js";
+import discussionTypeDefs from "./schemas/discussionSchema.js";
+import discussionResolvers from "./resolvers/discussionResolvers.js";
+import { authMiddleware } from "./middleware/authMiddleware.js";
 import dotenv from "dotenv";
-// Use lodash.merge to combine resolvers cleanly
 import merge from "lodash.merge";
+
 
 dotenv.config();
 
