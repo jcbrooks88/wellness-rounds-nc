@@ -7,6 +7,10 @@ import userTypeDefs from "./schemas/userSchema.js";
 import userResolvers from "./resolvers/userResolvers.js";
 import discussionTypeDefs from "./schemas/discussionSchema.js";
 import discussionResolvers from "./resolvers/discussionResolvers.js";
+import commentTypeDefs from "./schemas/commentSchema.js";
+import commentResolvers from "./resolvers/commentResolvers.js";
+import postTypeDefs from "./schemas/postSchema.js";
+import postResolvers from "./resolvers/postResolvers.js";
 import { authMiddleware } from "./middleware/authMiddleware.js";
 import dotenv from "dotenv";
 import merge from "lodash.merge";
@@ -29,8 +33,19 @@ app.use((_req, res, next) => {
 });
 
 // ✅ Combine typeDefs and resolvers
-const typeDefs = [userTypeDefs, discussionTypeDefs];
-const resolvers = merge(userResolvers, discussionResolvers);
+const typeDefs = [
+  userTypeDefs,
+  discussionTypeDefs,
+  postTypeDefs,
+  commentTypeDefs,
+];
+
+const resolvers = merge(
+  userResolvers,
+  discussionResolvers,
+  postResolvers,
+  commentResolvers
+);
 
 async function startServer() {
   try {

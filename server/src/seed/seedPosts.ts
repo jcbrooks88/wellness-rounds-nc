@@ -9,10 +9,15 @@ const seedPost = async () => {
     await connectDB();
     console.log('🌱 MongoDB connected');
 
-    // Clear existing data
-    await User.deleteMany({});
-    await Post.deleteMany({});
-    await Comment.deleteMany({});
+    // Check if data already exists
+    const existingUsers = await User.countDocuments();
+    const existingPosts = await Post.countDocuments();
+    const existingComments = await Comment.countDocuments();
+
+    if (existingUsers > 0 || existingPosts > 0 || existingComments > 0) {
+      console.log('⚠️ Database already seeded. Skipping seeding process.');
+      return;
+    }
 
     const now = new Date();
 
