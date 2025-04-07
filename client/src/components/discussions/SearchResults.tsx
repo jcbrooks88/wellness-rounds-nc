@@ -1,20 +1,7 @@
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { graphqlRequest } from "../../utils/api";
-import { gql } from "@apollo/client";
-
-const GET_DISCUSSION_QUERY = gql`
-  query getDiscussion($id: ID!) {
-    getDiscussion(id: $id) {
-      title
-      content
-      author {
-        username
-      }
-      createdAt
-    }
-  }
-`;
+import { GET_DISCUSSIONS_QUERY } from "../../graphql/queries/graphql";
 
 export default function SearchResults() {
   const { id } = useParams<{ id: string }>();
@@ -23,7 +10,7 @@ export default function SearchResults() {
   useEffect(() => {
     const fetchDiscussion = async () => {
       try {
-        const data = await graphqlRequest(GET_DISCUSSION_QUERY, { id });
+        const data = await graphqlRequest(GET_DISCUSSIONS_QUERY, { id });
         setDiscussion(data.getDiscussion);
       } catch (err) {
         console.error("Error fetching discussion:", err);

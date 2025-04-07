@@ -10,6 +10,7 @@ const typeDefs = gql`
     lastName: String!
     posts: [Post]
     comments: [Comment]
+    discussions: [Discussion]
   }
 
   type Post {
@@ -37,6 +38,7 @@ type AuthPayload {
     getAllPosts: [Post!]!
     user(id: ID!): User
     users: [User]
+    me: User
   }
 
   type Mutation {

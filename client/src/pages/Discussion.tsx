@@ -3,21 +3,8 @@ import Discussions from "../components/discussions/Discussions";
 import SearchBar from "../components/discussions/SearchBar";
 import SearchResults from "../components/discussions/SearchResults";
 import { graphqlRequest } from "../utils/api";
-import { gql } from "@apollo/client";
+import { GET_DISCUSSIONS_QUERY } from "../graphql/queries/graphql";
 
-const GET_DISCUSSIONS_QUERY = gql`
-  query {
-    discussions {
-      _id
-      title
-      content
-      keywords
-      author {
-        username
-      }
-    }
-  }
-`;
 
 export default function DiscussionPage() {
   const [discussions, setDiscussions] = useState<any[]>([]);

@@ -1,22 +1,8 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { graphqlRequest } from "../../utils/api";
-import { gql } from "@apollo/client";
+import { SEARCH_DISCUSSIONS_QUERY } from "../../graphql/queries/graphql";
 
-export const SEARCH_DISCUSSIONS_QUERY = gql`
-  query SearchDiscussions($title: String!, $keywords: [String]!) {
-    searchDiscussions(title: $title, keywords: $keywords) {
-      _id
-      title
-      content
-      keywords
-      author {
-        _id
-        username
-      }
-    }
-  }
-`;
 
 const keywordOptions = [
   "Mental Health",

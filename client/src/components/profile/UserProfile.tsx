@@ -1,17 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useAuth } from "../../context/AuthContext"; // Updated to use useAuth hook
 import { graphqlRequest } from "../../utils/api";
-import { gql } from "graphql-tag";
+import { GET_USER_QUERY } from "../../graphql/queries/graphql"; 
 
-const GET_USER_QUERY = gql`
-  query {
-    me {
-      _id
-      username
-      email
-    }
-  }
-`;
+
 
 const Profile: React.FC = () => {
   const { token, isAuthenticated } = useAuth(); // Access token and authentication status from context
