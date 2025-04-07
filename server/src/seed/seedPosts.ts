@@ -4,10 +4,10 @@ import Post from '../models/Post.js';
 import { Comment } from '../models/Comment.js';
 import { IPost } from '../models/Post.js';
 
-const seedPost = async () => {
+const seedPosts = async () => {
   try {
     await connectDB();
-    console.log('🌱 MongoDB connected');
+    console.log('⚡ MongoDB already connected');
 
     // Check if data already exists
     const existingUsers = await User.countDocuments();
@@ -15,7 +15,7 @@ const seedPost = async () => {
     const existingComments = await Comment.countDocuments();
 
     if (existingUsers > 0 || existingPosts > 0 || existingComments > 0) {
-      console.log('⚠️ Database already seeded. Skipping seeding process.');
+      console.log('⚠️ Posts already seeded. Skipping seeding process.');
       return;
     }
 
@@ -147,4 +147,4 @@ const seedPost = async () => {
   }
 };
 
-export default seedPost;
+export default seedPosts;

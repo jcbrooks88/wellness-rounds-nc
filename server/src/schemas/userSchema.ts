@@ -1,34 +1,50 @@
+// typeDefs.ts or schema.js
 import { gql } from "apollo-server-express";
 
-const userTypeDefs = gql`
+const typeDefs = gql`
   type User {
     _id: ID!
     username: String!
     email: String!
-    firstName: String
-    lastName: String
+    firstName: String!
+    lastName: String!
+    posts: [Post]
+    comments: [Comment]
   }
 
-  type Auth {
-    token: String!
-    user: User!
+  type Post {
+    _id: ID!
+    title: String!
+    content: String!
+    author: User!
+    createdAt: String!
+    comments: [Comment]
   }
 
+  type Comment {
+    _id: ID!
+    content: String!
+    author: User!
+    createdAt: String!
+  }
+
+type AuthPayload {
+  token: String!
+  user: User!
+}
+  
   type Query {
-    me: User
+    getAllPosts: [Post!]!
     user(id: ID!): User
+    users: [User]
   }
 
   type Mutation {
-    login(email: String!, password: String!): Auth
-    addUser(
-      username: String!
-      email: String!
-      password: String!
-      firstName: String
-      lastName: String
-    ): Auth
+    login(email: String!, password: String!): AuthPayload!
+    signup(email: String!, password: String!): AuthPayload!
+    addUser(username: String!, email: String!, password: String!, firstName: String!, lastName: String!): AuthPayload!
+    createPost(title: String!, content: String!, authorId: ID!): Post!
   }
 `;
 
-export default userTypeDefs;
+export default typeDefs;

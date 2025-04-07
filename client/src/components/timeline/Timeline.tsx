@@ -1,5 +1,5 @@
 import { useQuery } from '@apollo/client';
-import { GET_ALL_POSTS } from '../../graphql/queries/auth';
+import { GET_ALL_POSTS } from '../../graphql/queries/graphql';
 import PostCard from './PostCard';
 
 const Timeline = () => {

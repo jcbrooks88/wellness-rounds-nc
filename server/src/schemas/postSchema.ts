@@ -1,6 +1,6 @@
 import { gql } from 'apollo-server-express';
 
-const postTypeDefs = gql`
+export const postTypeDefs = gql`
   type Post {
     _id: ID!
     title: String!
@@ -11,15 +11,13 @@ const postTypeDefs = gql`
     updatedAt: String!
   }
 
-  type Query {
+  extend type Query {
     getAllPosts: [Post!]!
     getPostById(postId: ID!): Post
   }
 
-  type Mutation {
+  extend type Mutation {
     createPost(title: String!, content: String!, authorId: ID!): Post!
     deletePost(postId: ID!): Post
   }
 `;
-
-export default postTypeDefs;

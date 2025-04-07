@@ -5,7 +5,7 @@ const seedDiscussions = async () => {
     console.log("🌱 Seeding discussions...");
 
     if (await Discussion.countDocuments()) {
-      console.log("✅ Discussions already seeded.");
+      console.log("⚠️ Discussions already seeded.");
       return;
     }
 

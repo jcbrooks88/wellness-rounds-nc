@@ -1,64 +1,80 @@
 import React, { useState } from "react";
-import { gql, useMutation } from "@apollo/client";
+import { useMutation } from "@apollo/client";
 import { useNavigate } from "react-router-dom";
-
-const CREATE_USER = gql`
-  mutation AddUser($username: String!, $email: String!, $password: String!) {
-    addUser(username: $username, email: $email, password: $password) {
-      token
-      user {
-        _id
-        username
-        email
-      }
-    }
-  }
-`;
+import { SIGNUP_MUTATION } from "../../graphql/mutations/mutations"; // adjust path as needed
 
 const Signup: React.FC = () => {
-  const [username, setUsername] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
   const navigate = useNavigate();
+  const [formData, setFormData] = useState({
+    username: "",
+    firstName: "",
+    lastName: "",
+    email: "",
+    password: "",
+  });
 
-  const [signupMutation, { loading, error }] = useMutation(CREATE_USER, {
-    onCompleted: (_data) => {
-      window.alert("Signup complete! Redirecting to login...");
+  const [signup, { loading, error }] = useMutation(SIGNUP_MUTATION, {
+    onCompleted: () => {
+      alert("Signup complete! Redirecting to login...");
       navigate("/login");
     },
   });
 
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    signupMutation({ variables: { username, email, password } });
+    signup({ variables: formData });
   };
 
   return (
     <form onSubmit={handleSubmit}>
       <input
+        name="firstName"
         type="text"
-        value={username}
-        onChange={(e) => setUsername(e.target.value)}
+        value={formData.firstName}
+        onChange={handleChange}
+        placeholder="First Name"
+        required
+      />
+      <input
+        name="lastName"
+        type="text"
+        value={formData.lastName}
+        onChange={handleChange}
+        placeholder="Last Name"
+        required
+      />
+      <input
+        name="username"
+        type="text"
+        value={formData.username}
+        onChange={handleChange}
         placeholder="Username"
         required
       />
       <input
+        name="email"
         type="email"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
+        value={formData.email}
+        onChange={handleChange}
         placeholder="Email"
         required
       />
       <input
+        name="password"
         type="password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
+        value={formData.password}
+        onChange={handleChange}
         placeholder="Password"
         required
       />
       {error && <p style={{ color: "red" }}>Signup failed. Try again.</p>}
       <button type="submit" disabled={loading}>
-        {loading ? "Signing up..." : "Signup"}
+        {loading ? "Signing up..." : "Sign Up"}
       </button>
     </form>
   );

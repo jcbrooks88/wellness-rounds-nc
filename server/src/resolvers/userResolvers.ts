@@ -22,16 +22,18 @@ const userResolvers = {
   },
 
   Mutation: {
-    addUser: async (_: any, { username, email, password }: { username: string; email: string; password: string }) => {
-      const user = await User.create({ username, email, password });
-      if (!user || typeof user._id !== "object" || typeof user.username !== "string" || typeof user.email !== "string") {
-        throw new Error("Invalid user object");
-      }
-      if (!user._id) {
-        throw new Error("User ID is null");
-      }
-      const token = signToken({ _id: (user._id as unknown as string).toString(), username: user.username, email: user.email });
-
+    addUser: async (
+      _: any,
+      { username, email, password, firstName, lastName }: any
+    ) => {
+      const user = await User.create({ username, email, password, firstName, lastName }); // ✅ send the actual fields
+    
+      const token = signToken({
+        _id: user._id.toString(),
+        username: user.username,
+        email: user.email,
+      });
+    
       return { token, user };
     },
 

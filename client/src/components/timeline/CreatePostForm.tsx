@@ -1,22 +1,40 @@
 import { useMutation } from '@apollo/client';
 import { useState } from 'react';
-import { CREATE_POST } from '../../graphql/mutations/mutations';
-import { GET_ALL_POSTS } from '../../graphql/queries/auth';
+import { CREATE_POST_MUTATION } from '../../graphql/mutations/mutations';
+import { GET_ALL_POSTS } from '../../graphql/queries/graphql';
+import { useAuth } from '../../context/AuthContext';
 import './Timeline.css';
 
-const CreatePostForm = ({ authorId }: { authorId: string }) => {
+const CreatePostForm = () => {
+  const { user } = useAuth();
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
 
-  const [createPost, { loading, error }] = useMutation(CREATE_POST, {
+  const [createPost, { loading, error }] = useMutation(CREATE_POST_MUTATION, {
     refetchQueries: [{ query: GET_ALL_POSTS }],
   });
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    await createPost({ variables: { title, content, authorId } });
-    setTitle('');
-    setContent('');
+
+    if (!user || !user._id) {
+      console.error("User not authenticated or missing ID.");
+      return;
+    }
+
+    try {
+      await createPost({
+        variables: {
+          title,
+          content,
+          authorId: user._id,
+        },
+      });
+      setTitle('');
+      setContent('');
+    } catch (err) {
+      console.error("Error creating post:", err);
+    }
   };
 
   return (

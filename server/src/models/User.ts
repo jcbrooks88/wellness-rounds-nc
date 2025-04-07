@@ -19,18 +19,20 @@ const userSchema = new mongoose.Schema(
     password: {
       type: String,
       required: true,
-      minlength: 6,
+      minlength: 4,
     },
     firstName: {
       type: String,
-      required: false,
+      required: true,
       trim: true,
     },
     lastName: {
       type: String,
-      required: false,
+      required: true,
       trim: true,
     },
+    posts: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Post' }],
+    comments: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Comment' }],
   },
   { timestamps: true }
 );

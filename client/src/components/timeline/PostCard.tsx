@@ -1,3 +1,4 @@
+// PostCard.tsx
 import { useState } from 'react';
 import CommentList from './CommentList';
 
@@ -7,18 +8,23 @@ const PostCard = ({ post }: { post: any }) => {
 
   const handleLike = () => {
     setLikeCount(likeCount + 1);
-    // Optionally: Trigger a mutation here to persist like
+    // Optional: Add mutation to persist like count
   };
 
   return (
     <div className="post-card">
       <div className="post-header">
         <h3>{title}</h3>
-        <small>by {author.firstName} {author.lastName} • {new Date(createdAt).toLocaleString()}</small>
+        <small>
+          by {author.firstName} {author.lastName} •{' '}
+          {new Date(createdAt).toLocaleString()}
+        </small>
       </div>
       <p>{content}</p>
 
-      <button onClick={handleLike} className="like-button">❤️ {likeCount}</button>
+      <button onClick={handleLike} className="like-button">
+        ❤️ {likeCount}
+      </button>
 
       <CommentList comments={comments} />
     </div>

@@ -1,6 +1,6 @@
 import { gql } from 'apollo-server-express';
 
-const commentTypeDefs = gql`
+export const commentTypeDefs = gql`
   type Comment {
     _id: ID!
     content: String!
@@ -18,5 +18,3 @@ const commentTypeDefs = gql`
     addComment(postId: ID!, content: String!, authorId: ID!): Comment!
   }
 `;
-
-export default commentTypeDefs;

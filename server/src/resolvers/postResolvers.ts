@@ -25,23 +25,28 @@ const postResolvers = {
   Mutation: {
     createPost: async (
       _: any,
-      { title, content, authorId }: { title: string; content: string; authorId: string }
+      { title, content }: { title: string; content: string },
+      { user }: any // Access user from context
     ) => {
-      if (!mongoose.Types.ObjectId.isValid(authorId)) {
-        throw new Error('Invalid authorId');
+      if (!user) {
+        throw new Error('Authentication required');
       }
 
       const newPost = new Post({
         title,
         content,
-        author: new mongoose.Types.ObjectId(authorId),
+        author: user._id, // Use the user._id from context
       });
 
       await newPost.save();
       return newPost.populate('author');
     },
 
-    deletePost: async (_: any, { postId }: { postId: string }) => {
+    deletePost: async (_: any, { postId }: { postId: string }, { user }: any) => {
+      if (!user) {
+        throw new Error('Authentication required');
+      }
+
       if (!mongoose.Types.ObjectId.isValid(postId)) {
         throw new Error('Invalid postId');
       }

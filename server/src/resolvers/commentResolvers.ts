@@ -2,20 +2,24 @@ import { Comment } from '../models/Comment.js';
 import Post from '../models/Post.js';
 import mongoose from 'mongoose';
 
-
 const commentResolvers = {
   Mutation: {
     addComment: async (
       _: any,
-      { postId, content, authorId }: { postId: string; content: string; authorId: string }
+      { postId, content }: { postId: string; content: string },
+      { user }: any // Access user from context
     ) => {
-      if (!mongoose.Types.ObjectId.isValid(postId) || !mongoose.Types.ObjectId.isValid(authorId)) {
-        throw new Error('Invalid postId or authorId');
+      if (!user) {
+        throw new Error('Authentication required');
+      }
+
+      if (!mongoose.Types.ObjectId.isValid(postId)) {
+        throw new Error('Invalid postId');
       }
 
       const comment = new Comment({
         content,
-        author: new mongoose.Types.ObjectId(authorId),
+        author: user._id, // Use user._id from the context
         post: new mongoose.Types.ObjectId(postId),
       });
 

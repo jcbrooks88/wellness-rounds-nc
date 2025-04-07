@@ -1,20 +1,20 @@
 import express from "express";
 import { ApolloServer } from "apollo-server-express";
 import seedDiscussions from "./seed/seedDiscussions.js";
-import seedPost from "./seed/seedPosts.js";
+import seedPosts from "./seed/seedPosts.js";
 import connectDB from "./config/connection.js";
 import userTypeDefs from "./schemas/userSchema.js";
 import userResolvers from "./resolvers/userResolvers.js";
 import discussionTypeDefs from "./schemas/discussionSchema.js";
 import discussionResolvers from "./resolvers/discussionResolvers.js";
-import commentTypeDefs from "./schemas/commentSchema.js";
+import { commentTypeDefs } from "./schemas/commentSchema.js";
 import commentResolvers from "./resolvers/commentResolvers.js";
-import postTypeDefs from "./schemas/postSchema.js";
+import { postTypeDefs } from "./schemas/postSchema.js";
 import postResolvers from "./resolvers/postResolvers.js";
+import rootTypeDefs from "./schemas/rootSchema.js";
 import { authMiddleware } from "./middleware/authMiddleware.js";
 import dotenv from "dotenv";
 import merge from "lodash.merge";
-
 
 dotenv.config();
 
@@ -23,7 +23,7 @@ const PORT = process.env.PORT || 4000;
 
 app.use(express.json());
 
-// ✅ Fix CORS issue
+// CORS configuration
 app.use((_req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "http://localhost:5173");
   res.setHeader("Access-Control-Allow-Credentials", "true");
@@ -32,8 +32,9 @@ app.use((_req, res, next) => {
   next();
 });
 
-// ✅ Combine typeDefs and resolvers
+// Combine typeDefs and resolvers
 const typeDefs = [
+  rootTypeDefs, // always comes first
   userTypeDefs,
   discussionTypeDefs,
   postTypeDefs,
@@ -55,13 +56,15 @@ async function startServer() {
     await seedDiscussions();
     console.log("🌱 Discussions seeding completed");
 
-    await seedPost();
+    await seedPosts();
     console.log("🌱 Posts seeding completed");
 
     const server = new ApolloServer({
       typeDefs,
       resolvers,
-      context: ({ req }) => authMiddleware({ req }),
+      context: ({ req }) => {
+        return { user: authMiddleware({ req }).user };  // Attach user to context
+      },
     });
 
     await server.start();
