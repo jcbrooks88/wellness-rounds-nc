@@ -44,11 +44,13 @@ export const CREATE_POST_MUTATION = gql`
   mutation CreatePost(
       $title: String!
       $content: String!
+      $username: String!
   ) {
     createPost(title: $title, content: $content) {
       _id
       title
       content
+      username 
       author {
         _id
         firstName
@@ -59,23 +61,24 @@ export const CREATE_POST_MUTATION = gql`
   }
 `;
 
-
-export const CREATE_DISCUSSION_MUTATION = `
-  mutation createDiscussion(
+export const CREATE_DISCUSSION_MUTATION = gql`
+  mutation CreateDiscussion(
     $title: String!
     $content: String!
     $keywords: [String!]!
   ) {
-  createDiscussion(title: $title, content: $content, keywords: $keywords) {
+    createDiscussion(title: $title, content: $content, keywords: $keywords) {
       _id
       title
       content
+      keywords
+      createdAt
       author {
         _id
+        username
         firstName
         lastName
       }
-      createdAt
+    }
   }
-}
 `;

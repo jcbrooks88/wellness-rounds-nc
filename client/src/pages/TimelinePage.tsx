@@ -11,7 +11,7 @@ const TimelinePage = () => {
 
       {isAuthenticated && user ? (
         <>
-          <CreatePostForm authorId={user._id} />
+          <CreatePostForm />
           <Timeline />
         </>
       ) : (

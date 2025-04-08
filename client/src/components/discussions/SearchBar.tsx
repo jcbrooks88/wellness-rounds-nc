@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 import { graphqlRequest } from "../../utils/api";
 import { SEARCH_DISCUSSIONS_QUERY } from "../../graphql/queries/graphql";
 
-
 const keywordOptions = [
   "Mental Health",
   "Burnout",
@@ -27,7 +26,7 @@ export default function SearchBar({ onResults }: SearchBarProps) {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (!query) {
+    if (!query.trim()) {
       setResults([]);
       onResults?.([]);
       return;
@@ -38,14 +37,13 @@ export default function SearchBar({ onResults }: SearchBarProps) {
       setError(null);
 
       try {
-        // Match input to known keywords (case-insensitive)
         const matchedKeywords = keywordOptions.filter((k) =>
           k.toLowerCase().includes(query.toLowerCase())
         );
 
         const data = await graphqlRequest(SEARCH_DISCUSSIONS_QUERY, {
-          title: query, // still enables partial title match
-          keywords: matchedKeywords, // dynamic keyword filtering
+          title: query,
+          keywords: matchedKeywords,
         });
 
         setResults(data.searchDiscussions);
@@ -61,6 +59,17 @@ export default function SearchBar({ onResults }: SearchBarProps) {
 
     return () => clearTimeout(delaySearch);
   }, [query]);
+
+  const highlightMatch = (text: string) => {
+    const parts = text.split(new RegExp(`(${query})`, "gi"));
+    return parts.map((part, i) =>
+      part.toLowerCase() === query.toLowerCase() ? (
+        <mark key={i}>{part}</mark>
+      ) : (
+        part
+      )
+    );
+  };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
@@ -84,20 +93,23 @@ export default function SearchBar({ onResults }: SearchBarProps) {
   };
 
   return (
-    <div style={{ padding: "1rem" }}>
+    <div style={{ padding: "1rem", maxWidth: "600px", margin: "0 auto" }}>
       <input
         type="text"
         placeholder="Search by keyword or title..."
         value={query}
         onChange={handleInputChange}
-        style={{ width: "100%", padding: "8px", borderRadius: "4px" }}
+        style={{
+          width: "100%",
+          padding: "10px",
+          borderRadius: "6px",
+          border: "1px solid #ccc",
+          fontSize: "16px",
+        }}
       />
 
-      {loading && <p>Loading...</p>}
-      {error && <p style={{ color: "red" }}>{error}</p>}
-
       {filteredKeywords.length > 0 && (
-        <ul style={{ listStyle: "none", padding: 0 }}>
+        <ul style={{ listStyle: "none", padding: 0, marginTop: "10px" }}>
           {filteredKeywords.map((keyword) => (
             <li
               key={keyword}
@@ -105,17 +117,21 @@ export default function SearchBar({ onResults }: SearchBarProps) {
               style={{
                 display: "inline-block",
                 margin: "5px",
-                padding: "8px 12px",
-                backgroundColor: "#eee",
+                padding: "6px 12px",
+                backgroundColor: "#f0f0f0",
                 borderRadius: "16px",
-                cursor: "pointer"
+                cursor: "pointer",
+                fontSize: "14px",
               }}
             >
-              {keyword}
+              {highlightMatch(keyword)}
             </li>
           ))}
         </ul>
       )}
+
+      {loading && <p style={{ marginTop: "10px" }}>Loading...</p>}
+      {error && <p style={{ color: "red", marginTop: "10px" }}>{error}</p>}
 
       {results.length > 0 && (
         <div
@@ -123,7 +139,7 @@ export default function SearchBar({ onResults }: SearchBarProps) {
             marginTop: "1rem",
             display: "flex",
             flexWrap: "wrap",
-            gap: "1rem"
+            gap: "1rem",
           }}
         >
           {results.map((discussion) => (
@@ -131,18 +147,31 @@ export default function SearchBar({ onResults }: SearchBarProps) {
               key={discussion._id}
               onClick={() => handleResultClick(discussion._id)}
               style={{
-                border: "1px solid #ccc",
+                border: "1px solid #ddd",
                 borderRadius: "8px",
                 padding: "1rem",
                 cursor: "pointer",
-                width: "200px"
+                width: "100%",
+                maxWidth: "260px",
+                backgroundColor: "#fafafa",
+                transition: "box-shadow 0.2s",
               }}
+              onMouseEnter={(e) =>
+                (e.currentTarget.style.boxShadow = "0 2px 8px rgba(0,0,0,0.1)")
+              }
+              onMouseLeave={(e) =>
+                (e.currentTarget.style.boxShadow = "none")
+              }
             >
-              <h3>{discussion.title}</h3>
-              <p style={{ fontSize: "0.85rem", color: "#666" }}>
+              <h3 style={{ marginBottom: "0.5rem" }}>
+                {highlightMatch(discussion.title)}
+              </h3>
+              <p style={{ fontSize: "0.85rem", color: "#555" }}>
                 By {discussion.author?.username ?? "Unknown"}
               </p>
-              <p>{discussion.content.slice(0, 60)}...</p>
+              <p style={{ fontSize: "0.9rem", color: "#333" }}>
+                {highlightMatch(discussion.content.slice(0, 60))}...
+              </p>
             </div>
           ))}
         </div>

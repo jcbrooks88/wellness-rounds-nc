@@ -1,20 +1,20 @@
 import { useState, useEffect } from "react";
 import Discussions from "../components/discussions/Discussions";
 import SearchBar from "../components/discussions/SearchBar";
-import SearchResults from "../components/discussions/SearchResults";
+import SearchResultsList from "../components/discussions/SearchResultsList"; // <-- use this!
 import { graphqlRequest } from "../utils/api";
 import { GET_DISCUSSIONS_QUERY } from "../graphql/queries/graphql";
 
-
 export default function DiscussionPage() {
-  const [discussions, setDiscussions] = useState<any[]>([]);
+  const [allDiscussions, setAllDiscussions] = useState<any[]>([]);
+  const [searchResults, setSearchResults] = useState<any[]>([]);
   const [hasSearched, setHasSearched] = useState(false);
 
   useEffect(() => {
     async function fetchDiscussions() {
       try {
         const data = await graphqlRequest(GET_DISCUSSIONS_QUERY);
-        setDiscussions(data.discussions);
+        setAllDiscussions(data.discussions);
       } catch (error) {
         console.error("Error fetching discussions:", error);
       }
@@ -24,18 +24,19 @@ export default function DiscussionPage() {
   }, []);
 
   const handleSearchResults = (results: any[]) => {
-    setDiscussions(results);
-    setHasSearched(true); // toggle visibility of DiscussionResults
+    setSearchResults(results);
+    setHasSearched(true);
   };
 
   return (
     <div>
-      <h1>Discussions</h1>
+      <h1>Search Discussions</h1>
       <SearchBar onResults={handleSearchResults} />
 
-      {hasSearched && <SearchResults />} {/* Show after search */}
+      {hasSearched && <SearchResultsList results={searchResults} />}
 
-      <Discussions discussions={discussions} />
+      <h2>All Discussions</h2>
+      <Discussions discussions={allDiscussions} />
     </div>
   );
 }

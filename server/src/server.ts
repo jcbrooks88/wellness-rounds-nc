@@ -1,3 +1,4 @@
+
 import express from "express";
 import { ApolloServer } from "apollo-server-express";
 import seedDiscussions from "./seed/seedDiscussions.js";
@@ -34,7 +35,7 @@ app.use((_req, res, next) => {
 
 // Combine typeDefs and resolvers
 const typeDefs = [
-  rootTypeDefs, // always comes first
+  rootTypeDefs,
   userTypeDefs,
   discussionTypeDefs,
   postTypeDefs,

@@ -28,6 +28,7 @@ const CreatePostForm = () => {
         variables: {
           title,
           content,
+          username: user.username,
         },
       });
       setTitle('');

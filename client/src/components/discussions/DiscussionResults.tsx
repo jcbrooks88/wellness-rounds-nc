@@ -11,7 +11,7 @@ export default function DiscussionResults() {
   return (
     <div style={{ padding: "2rem" }}>
       <h1>{discussion.title}</h1>
-      <p><strong>By:</strong> {discussion.author.username}</p>
+      <p><strong>By:</strong> {discussion.username}</p>
       <hr />
       <p>{discussion.content}</p>
     </div>

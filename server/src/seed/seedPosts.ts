@@ -3,6 +3,7 @@ import { User } from '../models/User.js';
 import Post from '../models/Post.js';
 import { Comment } from '../models/Comment.js';
 import { IPost } from '../models/Post.js';
+import mongoose from 'mongoose';
 
 const seedPosts = async () => {
   try {
@@ -108,24 +109,28 @@ const seedPosts = async () => {
     const comments = await Comment.insertMany([
       {
         content: 'This is super helpful, thanks!',
+        username: 'jeff',
         author: jeff._id,
         post: post1._id,
         createdAt: now,
       },
       {
         content: 'Totally agree with this.',
+        username: 'derek',
         author: derek._id,
         post: post1._id,
         createdAt: now,
       },
       {
         content: 'Great explanation!',
+        username: 'jeffery',
         author: jeffery._id,
         post: post2._id,
         createdAt: now,
       },
       {
         content: 'Hooks changed everything!',
+        username: 'darlene',
         author: darlene._id,
         post: post3._id,
         createdAt: now,
@@ -133,9 +138,12 @@ const seedPosts = async () => {
     ]);
 
     // Link comments to posts
-    post1.comments = [comments[0]._id, comments[1]._id];
-    post2.comments = [comments[2]._id];
-    post3.comments = [comments[3]._id];
+    post1.comments = [
+      comments[0]._id as mongoose.Types.ObjectId,
+      comments[1]._id as mongoose.Types.ObjectId,
+    ];
+    post2.comments = [comments[2]._id as mongoose.Types.ObjectId];
+    post3.comments = [comments[3]._id as mongoose.Types.ObjectId];
 
     await post1.save();
     await post2.save();
