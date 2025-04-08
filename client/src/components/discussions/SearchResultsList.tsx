@@ -6,7 +6,7 @@ interface SearchResultsProps {
 
 const SearchResultsList: React.FC<SearchResultsProps> = ({ results }) => {
   if (results.length === 0) {
-    return <p style={{ padding: "2rem" }}>No discussions found.</p>;
+    return <p style={{ padding: "2rem" }}>👨🏽‍💻</p>;
   }
 
   return (
