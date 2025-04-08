@@ -42,11 +42,10 @@ export const SIGNUP_MUTATION = gql`
 
 export const CREATE_POST_MUTATION = gql`
   mutation CreatePost(
-    $title: String!
-    $content: String!
-    $authorId: ID!
+      $title: String!
+      $content: String!
   ) {
-    createPost(title: $title, content: $content, authorId: $authorId) {
+    createPost(title: $title, content: $content) {
       _id
       title
       content
@@ -58,4 +57,25 @@ export const CREATE_POST_MUTATION = gql`
       createdAt
     }
   }
+`;
+
+
+export const CREATE_DISCUSSION_MUTATION = `
+  mutation createDiscussion(
+    $title: String!
+    $content: String!
+    $keywords: [String!]!
+  ) {
+  createDiscussion(title: $title, content: $content, keywords: $keywords) {
+      _id
+      title
+      content
+      author {
+        _id
+        firstName
+        lastName
+      }
+      createdAt
+  }
+}
 `;

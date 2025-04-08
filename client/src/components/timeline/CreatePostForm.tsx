@@ -16,6 +16,7 @@ const CreatePostForm = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    console.log("🧠 Current user from AuthContext:", user);
 
     if (!user || !user._id) {
       console.error("User not authenticated or missing ID.");
@@ -27,7 +28,6 @@ const CreatePostForm = () => {
         variables: {
           title,
           content,
-          authorId: user._id,
         },
       });
       setTitle('');

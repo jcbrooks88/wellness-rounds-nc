@@ -26,7 +26,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
           // Token has already expired
           logout();
         } else {
-          setUser(decoded);
+          setUser(decoded.data);
   
           // Set timeout to auto-logout when token expires
           const timeout = setTimeout(() => {

@@ -1,19 +1,8 @@
 import { useState, useContext } from "react";
 import { AuthContext } from "../../context/AuthContext"; 
 import { graphqlRequest } from "../../utils/api";
+import { CREATE_DISCUSSION_MUTATION } from "../../graphql/mutations/mutations";
 
-const CREATE_DISCUSSION_MUTATION = `
-  mutation createDiscussion($title: String!, $content: String!, $keywords: [String!]!) {
-    createDiscussion(title: $title, content: $content, keywords: $keywords) {
-      title
-      content
-      keywords
-      author {
-        username
-      }
-    }
-  }
-`;
 
 const keywordOptions = ["Mental Health", "Burnout", "Career Change", "Self-Care", "Therapy", "Wellness", "Support"];
 

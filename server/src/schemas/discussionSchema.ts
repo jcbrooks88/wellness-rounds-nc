@@ -6,7 +6,6 @@ const discussionTypeDefs = gql`
     title: String!
     content: String!
     keywords: [String]
-    author: User
   }
 
 extend type Query {

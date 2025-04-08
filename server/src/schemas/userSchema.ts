@@ -45,7 +45,7 @@ type AuthPayload {
     login(email: String!, password: String!): AuthPayload!
     signup(email: String!, password: String!): AuthPayload!
     addUser(username: String!, email: String!, password: String!, firstName: String!, lastName: String!): AuthPayload!
-    createPost(title: String!, content: String!, authorId: ID!): Post!
+    createPost(title: String!, content: String!): Post!
   }
 `;
 

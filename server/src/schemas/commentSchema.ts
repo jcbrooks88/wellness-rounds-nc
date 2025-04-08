@@ -4,7 +4,6 @@ export const commentTypeDefs = gql`
   type Comment {
     _id: ID!
     content: String!
-    author: User!
     post: Post!
     createdAt: String!
     updatedAt: String!
@@ -15,6 +14,6 @@ export const commentTypeDefs = gql`
   }
 
   extend type Mutation {
-    addComment(postId: ID!, content: String!, authorId: ID!): Comment!
+    addComment(postId: ID!, content: String!): Comment!
   }
 `;

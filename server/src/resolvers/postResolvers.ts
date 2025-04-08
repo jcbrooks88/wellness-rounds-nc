@@ -35,7 +35,7 @@ const postResolvers = {
       const newPost = new Post({
         title,
         content,
-        author: user._id, // Use the user._id from context
+        author: user.id,
       });
 
       await newPost.save();

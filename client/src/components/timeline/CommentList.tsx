@@ -12,4 +12,4 @@ const CommentList = ({ comments }: { comments: any[] }) => {
   };
   
   export default CommentList;
-  
+
