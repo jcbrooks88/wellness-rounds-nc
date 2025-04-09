@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { graphqlRequest } from "../../utils/api";
 import { SEARCH_DISCUSSIONS_QUERY } from "../../graphql/queries/graphql";
+import "../../App.css";
 
 const keywordOptions = [
   "Mental Health",
@@ -41,10 +42,17 @@ export default function SearchBar({ onResults }: SearchBarProps) {
           k.toLowerCase().includes(query.toLowerCase())
         );
 
-        const data = await graphqlRequest(SEARCH_DISCUSSIONS_QUERY, {
-          title: query,
-          keywords: matchedKeywords,
-        });
+        const data = await graphqlRequest(
+          SEARCH_DISCUSSIONS_QUERY,
+          {
+            title: query,
+            keywords: matchedKeywords,
+          },
+          undefined,
+          {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          }
+        );
 
         setResults(data.searchDiscussions);
         onResults?.(data.searchDiscussions);
@@ -93,36 +101,22 @@ export default function SearchBar({ onResults }: SearchBarProps) {
   };
 
   return (
-    <div style={{ padding: "1rem", maxWidth: "600px", margin: "0 auto" }}>
+    <div className="search-bar-container">
       <input
         type="text"
-        placeholder="Search by keyword or title..."
+        className="search-input"
+        placeholder="Search by keyword (Burnout, Mental Health, etc.) or title..."
         value={query}
         onChange={handleInputChange}
-        style={{
-          width: "100%",
-          padding: "10px",
-          borderRadius: "6px",
-          border: "1px solid #ccc",
-          fontSize: "16px",
-        }}
       />
 
       {filteredKeywords.length > 0 && (
-        <ul style={{ listStyle: "none", padding: 0, marginTop: "10px" }}>
+        <ul className="keyword-list">
           {filteredKeywords.map((keyword) => (
             <li
               key={keyword}
+              className="keyword-pill"
               onClick={() => handleKeywordClick(keyword)}
-              style={{
-                display: "inline-block",
-                margin: "5px",
-                padding: "6px 12px",
-                backgroundColor: "#f0f0f0",
-                borderRadius: "16px",
-                cursor: "pointer",
-                fontSize: "14px",
-              }}
             >
               {highlightMatch(keyword)}
             </li>
@@ -130,48 +124,20 @@ export default function SearchBar({ onResults }: SearchBarProps) {
         </ul>
       )}
 
-      {loading && <p style={{ marginTop: "10px" }}>Loading...</p>}
-      {error && <p style={{ color: "red", marginTop: "10px" }}>{error}</p>}
+      {loading && <p className="search-loading">Loading...</p>}
+      {error && <p className="search-error">{error}</p>}
 
       {results.length > 0 && (
-        <div
-          style={{
-            marginTop: "1rem",
-            display: "flex",
-            flexWrap: "wrap",
-            gap: "1rem",
-          }}
-        >
+        <div className="search-results">
           {results.map((discussion) => (
             <div
               key={discussion._id}
+              className="search-result-card"
               onClick={() => handleResultClick(discussion._id)}
-              style={{
-                border: "1px solid #ddd",
-                borderRadius: "8px",
-                padding: "1rem",
-                cursor: "pointer",
-                width: "100%",
-                maxWidth: "260px",
-                backgroundColor: "#fafafa",
-                transition: "box-shadow 0.2s",
-              }}
-              onMouseEnter={(e) =>
-                (e.currentTarget.style.boxShadow = "0 2px 8px rgba(0,0,0,0.1)")
-              }
-              onMouseLeave={(e) =>
-                (e.currentTarget.style.boxShadow = "none")
-              }
             >
-              <h3 style={{ marginBottom: "0.5rem" }}>
-                {highlightMatch(discussion.title)}
-              </h3>
-              <p style={{ fontSize: "0.85rem", color: "#555" }}>
-                By {discussion.author?.username ?? "Unknown"}
-              </p>
-              <p style={{ fontSize: "0.9rem", color: "#333" }}>
-                {highlightMatch(discussion.content.slice(0, 60))}...
-              </p>
+              <h3>{highlightMatch(discussion.title)}</h3>
+              <p className="search-author">By {discussion.author?.username ?? "Unknown"}</p>
+              <p>{highlightMatch(discussion.content.slice(0, 60))}...</p>
             </div>
           ))}
         </div>

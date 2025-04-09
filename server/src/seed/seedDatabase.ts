@@ -43,13 +43,13 @@ export const seedDatabase = async () => {
       {
         title: 'Transitioning from Nursing to Tech',
         content: 'I’m considering a career change to software development. Has anyone else made the switch?',
-        keywords: ['Career Change', 'Nursing', 'Tech Industry'],
+        keywords: ['Career Change', 'Burnout', 'Nursing', 'Mental Health', 'Tech Industry'],
         author: sampleUser._id,
       },
       {
         title: 'Best Self-Care Practices for Night Shift Nurses',
         content: 'Working night shifts has affected my sleep and mental health. Any advice?',
-        keywords: ['Self-Care', 'Night Shift', 'Healthcare'],
+        keywords: ['Self-Care', 'Mental Health', 'Night Shift', 'Healthcare'],
         author: sampleUser._id,
       },
       {
@@ -61,7 +61,7 @@ export const seedDatabase = async () => {
       {
         title: 'Is Burnout Inevitable in Healthcare?',
         content: 'I\'ve seen too many colleagues leave the field due to burnout. Can we prevent it?',
-        keywords: ['Burnout', 'Healthcare', 'Wellness'],
+        keywords: ['Burnout', 'Healthcare', 'Mental Health', 'Wellness'],
         author: sampleUser._id,
       },
     ]);

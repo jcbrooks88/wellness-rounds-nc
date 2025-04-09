@@ -4,6 +4,19 @@ import { GraphQLError } from "graphql";
 const discussionResolvers = {
   Query: {
     discussions: async () => await Discussion.find().populate("author"),
+
+    getDiscussion: async (_: any, { id }: { id: string }) => {
+      try {
+        const discussion = await Discussion.findById(id).populate("author");
+        if (!discussion) {
+          throw new GraphQLError("Discussion not found");
+        }
+        return discussion;
+      } catch (err) {
+        throw new GraphQLError("Failed to fetch discussion");
+      }
+    },
+    
     searchDiscussions: async (_: any, { title = "", keywords = [] }: any) => {
       const query: any = {};
 

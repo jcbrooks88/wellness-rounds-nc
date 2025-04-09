@@ -69,6 +69,21 @@ export const GET_DISCUSSIONS_QUERY = gql`
     }
   }
 `;
+export const GET_DISCUSSION_BY_ID = gql`
+  query GetDiscussion($id: ID!) {
+    getDiscussion(id: $id) {
+      _id
+      title
+      content
+      keywords
+      createdAt
+      author {
+        _id
+        username
+      }
+    }
+  }
+`;
 
 export const SEARCH_DISCUSSIONS_QUERY = gql`
   query SearchDiscussions($title: String!, $keywords: [String]!) {

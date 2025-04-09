@@ -10,7 +10,8 @@ import SignupPage from "./pages/Signup";
 import ProtectedRoute from "./components/ProtectedRoute";
 import ContactPage from "./pages/Contact";
 import AboutPage from "./pages/About";
-import DiscussionResults from "./components/discussions/DiscussionResults";
+//import DiscussionResults from "./components/discussions/DiscussionResults";
+import ResultsPage from "./pages/Results";
 import "./App.css"; // import styles here
 
 const App = () => {
@@ -26,7 +27,7 @@ const App = () => {
             <Route path="/about" element={<AboutPage />} />
             <Route path="/contact" element={<ContactPage />} />
             <Route path="/discussion" element={<ProtectedRoute><DiscussionPage /></ProtectedRoute>} />
-            <Route path="/discussions/:id" element={<ProtectedRoute><DiscussionResults /></ProtectedRoute>} />
+            <Route path="/discussions/:id" element={<ProtectedRoute><ResultsPage /></ProtectedRoute>} />
             <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
             <Route path="/profile" element={<ProtectedRoute><ProfilePage /></ProtectedRoute>} />
             <Route path="*" element={<LoginPage />} />

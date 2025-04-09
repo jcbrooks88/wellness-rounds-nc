@@ -1,7 +1,8 @@
 import { useState, useContext } from "react";
-import { AuthContext } from "../../context/AuthContext"; 
+import { AuthContext } from "../../context/AuthContext";
 import { graphqlRequest } from "../../utils/api";
 import { CREATE_DISCUSSION_MUTATION } from "../../graphql/mutations/mutations";
+import "../../App.css";
 
 const keywordOptions = ["Mental Health", "Burnout", "Career Change", "Self-Care", "Therapy", "Wellness", "Support"];
 
@@ -55,83 +56,24 @@ export default function DiscussionForm({ onDiscussionCreated }: DiscussionFormPr
   };
 
   return (
-    <form onSubmit={handleSubmit} style={formStyle}>
+    <form onSubmit={handleSubmit} className="form-container">
       <h2>Create a Safe Space</h2>
-      <input type="text" placeholder="Topic..." value={title} onChange={(e) => setTitle(e.target.value)} style={inputStyle} />
-      <textarea placeholder="Content..." value={content} onChange={(e) => setContent(e.target.value)} style={textareaStyle} />
-      <div style={keywordsContainer}>
+      <input type="text" placeholder="Topic..." value={title} onChange={(e) => setTitle(e.target.value)} className="input" />
+      <textarea placeholder="Content..." value={content} onChange={(e) => setContent(e.target.value)} className="textarea" />
+      <div className="keywords-container">
         <p>Select Keywords:</p>
         {keywordOptions.map((keyword) => (
-          <label key={keyword} style={keywordLabel}>
+          <label key={keyword} className="keyword-label">
             <input type="checkbox" checked={selectedKeywords.includes(keyword)} onChange={() => toggleKeyword(keyword)} />
             {keyword}
           </label>
         ))}
       </div>
-      {error && <p style={errorStyle}>{error}</p>}
-      {success && <p style={successStyle}>{success}</p>}
-      <button type="submit" disabled={loading} style={buttonStyle}>
+      {error && <p className="error">{error}</p>}
+      {success && <p className="success">{success}</p>}
+      <button type="submit" disabled={loading} className="button">
         {loading ? "Creating..." : "Create Discussion"}
       </button>
     </form>
   );
 }
-
-const formStyle: React.CSSProperties = {
-  display: "flex",
-  flexDirection: "column",
-  gap: "10px",
-  maxWidth: "600px",
-  margin: "auto",
-  padding: "20px",
-  border: "1px solid #ddd",
-  borderRadius: "10px",
-  backgroundColor: "#f9f9f9",
-};
-
-const inputStyle: React.CSSProperties = {
-  padding: "10px",
-  fontSize: "16px",
-  borderRadius: "4px",
-  border: "1px solid #ccc",
-};
-
-const textareaStyle: React.CSSProperties = {
-  ...inputStyle,
-  height: "120px",
-};
-
-const keywordsContainer: React.CSSProperties = {
-  display: "flex",
-  flexWrap: "wrap",
-  gap: "10px",
-};
-
-const keywordLabel: React.CSSProperties = {
-  display: "flex",
-  alignItems: "center",
-  gap: "5px",
-  backgroundColor: "#e6e6e6",
-  padding: "5px 10px",
-  borderRadius: "16px",
-};
-
-const buttonStyle: React.CSSProperties = {
-  padding: "12px",
-  fontSize: "16px",
-  cursor: "pointer",
-  backgroundColor: "#007bff",
-  color: "#fff",
-  border: "none",
-  borderRadius: "6px",
-};
-
-const errorStyle: React.CSSProperties = {
-  color: "red",
-  fontSize: "14px",
-};
-
-const successStyle: React.CSSProperties = {
-  color: "green",
-  fontSize: "14px",
-};

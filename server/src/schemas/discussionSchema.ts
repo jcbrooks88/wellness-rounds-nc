@@ -13,6 +13,7 @@ const discussionTypeDefs = gql`
 
   extend type Query {
     discussions: [Discussion]
+    getDiscussion(id: ID!): Discussion
     searchDiscussions(title: String!, keywords: [String]!): [Discussion]
   }
 
@@ -20,6 +21,7 @@ const discussionTypeDefs = gql`
     createDiscussion(title: String!, content: String!, keywords: [String]!): Discussion
   }
 `;
+
 
 export default discussionTypeDefs;
 

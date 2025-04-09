@@ -6,7 +6,7 @@ interface SearchResultsProps {
 
 const SearchResultsList: React.FC<SearchResultsProps> = ({ results }) => {
   if (results.length === 0) {
-    return <p style={{ padding: "2rem" }}>👨🏽‍💻</p>;
+    return <p style={{ padding: "0rem", fontSize: "5rem", margin: "1%" }}>🔍</p>;
   }
 
   return (

@@ -14,7 +14,7 @@ export default function SearchResult() {
       setError(null);
       setLoading(true);
       try {
-        const data = await graphqlRequest(GET_DISCUSSIONS_QUERY, { id });
+        const data = await graphqlRequest(GET_DISCUSSIONS_QUERY, { id }, undefined, {});
         setDiscussion(data.getDiscussion);
       } catch (err) {
         console.error("Error fetching discussion:", err);
