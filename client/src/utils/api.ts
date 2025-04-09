@@ -2,7 +2,7 @@ import client from '../apolloClient';
 import { DocumentNode } from "@apollo/client";
 
 export const graphqlRequest = async (
-query: DocumentNode, variables: Record<string, any> = {}, undefined: undefined, headers: { Authorization: string; } | { Authorization?: undefined; }) => {
+query: DocumentNode, variables: Record<string, any> = {}, _undefined: undefined, _headers: { Authorization: string; } | { Authorization?: undefined; }) => {
   try {
     const result = await client.query({
       query,
@@ -17,9 +17,7 @@ query: DocumentNode, variables: Record<string, any> = {}, undefined: undefined, 
 };
 
 export const graphqlMutation = async (
-  mutation: DocumentNode,
-  variables: Record<string, any> = {}
-) => {
+mutation: DocumentNode, variables: Record<string, any> = {}, headers: { Authorization: string; } | { Authorization?: undefined; }) => {
   try {
     const result = await client.mutate({
       mutation,

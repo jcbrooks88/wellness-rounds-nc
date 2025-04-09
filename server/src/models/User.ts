@@ -31,6 +31,7 @@ const userSchema = new mongoose.Schema(
       required: true,
       trim: true,
     },
+    about: { type: String },
     posts: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Post' }],
     comments: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Comment' }],
   },

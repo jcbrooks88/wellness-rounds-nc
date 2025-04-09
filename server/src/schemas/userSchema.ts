@@ -10,6 +10,7 @@ const userTypeDefs = gql`
     posts: [Post]
     comments: [Comment]
     discussions: [Discussion]
+    about: String
   }
 
   type Post {
@@ -65,6 +66,7 @@ const userTypeDefs = gql`
     deletePost(postId: ID!): Post
     addComment(postId: ID!, content: String!): Comment!
     createDiscussion(title: String!, content: String!, keywords: [String]!): Discussion
+    updateAbout(about: String!): User
   }
 `;
 

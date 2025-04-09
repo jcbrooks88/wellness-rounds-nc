@@ -82,3 +82,12 @@ export const CREATE_DISCUSSION_MUTATION = gql`
     }
   }
 `;
+
+export const UPDATE_ABOUT_MUTATION = gql`
+  mutation UpdateAbout($about: String!) {
+    updateAbout(about: $about) {
+      _id
+      about
+    }
+  }
+`;

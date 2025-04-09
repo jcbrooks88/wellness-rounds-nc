@@ -3,6 +3,7 @@ import { signToken } from "../middleware/authMiddleware.js";
 import { AuthenticationError } from "apollo-server-express";
 import { Comment } from "../models/Comment.js";
 import Discussion from "../models/Discussion.js";
+import { GraphQLError } from "graphql";
 
 interface IUser {
   _id: string;
@@ -68,6 +69,21 @@ const userResolvers = {
 
       const token = signToken({ _id: (user._id as unknown as string).toString(), username: user.username, email: user.email });
       return { token, user };
+    },
+
+    updateAbout: async (_: any, { about }: { about: string }, context: any) => {
+      const { user } = context;
+      if (!user) {
+        throw new GraphQLError("Unauthorized");
+      }
+
+      const updatedUser = await User.findByIdAndUpdate(
+        user._id,
+        { about },
+        { new: true }
+      );
+
+      return updatedUser;
     },
   },
 };

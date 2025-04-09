@@ -1,15 +1,19 @@
 import React, { useEffect, useState } from "react";
-import { useAuth } from "../../context/AuthContext"; // Updated to use useAuth hook
-import { graphqlRequest } from "../../utils/api";
-import { GET_USER_QUERY } from "../../graphql/queries/graphql"; 
-
-
+import { useAuth } from "../../context/AuthContext";
+import { graphqlMutation } from "../../utils/api";
+import { GET_USER_QUERY } from "../../graphql/queries/graphql";
+import { UPDATE_ABOUT_MUTATION } from "../../graphql/mutations/mutations";
+import "../../App.css"; 
 
 const Profile: React.FC = () => {
-  const { token, isAuthenticated } = useAuth(); // Access token and authentication status from context
-  const [userData, setUserData] = useState<{ _id: string; username: string; email: string } | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const { token, isAuthenticated } = useAuth();
+  const [userData, setUserData] = useState<any>(null);
+  const [, setLoading] = useState(true);
+  const [, setError] = useState<string | null>(null);
+
+  // About Me state
+  const [aboutText, setAboutText] = useState("");
+  const [isEditingAbout, setIsEditingAbout] = useState(false);
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -19,8 +23,8 @@ const Profile: React.FC = () => {
       }
 
       try {
-        const headers = token ? { Authorization: `Bearer ${token}` } : {}; // Use token from context
-        const data = await graphqlRequest(GET_USER_QUERY, { headers });
+        const headers = token ? { Authorization: `Bearer ${token}` } : {};
+        const data = await graphqlMutation(GET_USER_QUERY, {}, headers);
         if (data?.me) {
           setUserData(data.me);
         }
@@ -33,59 +37,66 @@ const Profile: React.FC = () => {
     };
 
     fetchUser();
-  }, [isAuthenticated, token]); // Add token and isAuthenticated to dependencies
+  }, [isAuthenticated, token]);
 
-  if (!isAuthenticated) {
-    return <p style={messageStyle}>You need to log in to view your profile.</p>;
-  }
-
-  if (loading) return <p style={messageStyle}>Loading...</p>;
-  if (error) return <p style={errorStyle}>Error: {error}</p>;
+  const handleAboutSave = async () => {
+    try {
+      const variables = { about: aboutText };
+      const headers = token ? { Authorization: `Bearer ${token}` } : {};
+      const data = await graphqlMutation(UPDATE_ABOUT_MUTATION, variables, headers); // ✅ use mutation helper
+  
+      if (data?.updateAbout) {
+        setUserData({ ...userData, about: data.updateAbout.about });
+        setIsEditingAbout(false);
+      }
+    } catch (err) {
+      console.error("Error saving about section:", err);
+    }
+  };
 
   return (
-    <div style={profileContainer}>
+    <div className="profile-container">
       {userData ? (
         <div>
-          <h2 style={headingStyle}>{userData.username}'s Profile</h2>
-          <p style={infoStyle}>Email: {userData.email}</p>
+          <h2 className="profile-heading">{userData.username}'s Profile</h2>
+          <p className="profile-info">Email: {userData.email}</p>
+
+          {/* About Me Section */}
+          <div className="profile-about">
+            <h3 className="profile-subheading">About Me</h3>
+            {isEditingAbout ? (
+              <div className="profile-about-edit">
+                <textarea
+                  value={aboutText}
+                  onChange={(e) => setAboutText(e.target.value)}
+                  className="profile-textarea"
+                  rows={4}
+                />
+                <button className="btn-save" onClick={handleAboutSave}>
+                  Save
+                </button>
+              </div>
+            ) : (
+              <div className="profile-about-view">
+                <p>{userData.about || "No about section yet."}</p>
+                <button
+                  className="btn-edit"
+                  onClick={() => {
+                    setAboutText(userData.about || "");
+                    setIsEditingAbout(true);
+                  }}
+                >
+                  Edit
+                </button>
+              </div>
+            )}
+          </div>
         </div>
       ) : (
-        <p style={messageStyle}>No user data found.</p>
+        <p className="profile-message">No user data found.</p>
       )}
     </div>
   );
-};
-
-const profileContainer: React.CSSProperties = {
-  maxWidth: "500px",
-  margin: "20px auto",
-  padding: "20px",
-  borderRadius: "8px",
-  backgroundColor: "#f9f9f9",
-  boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)",
-};
-
-const headingStyle: React.CSSProperties = {
-  fontSize: "24px",
-  color: "#333",
-  marginBottom: "10px",
-};
-
-const infoStyle: React.CSSProperties = {
-  fontSize: "16px",
-  color: "#555",
-};
-
-const messageStyle: React.CSSProperties = {
-  fontSize: "16px",
-  color: "#777",
-  textAlign: "center",
-};
-
-const errorStyle: React.CSSProperties = {
-  color: "red",
-  fontSize: "14px",
-  textAlign: "center",
 };
 
 export default Profile;
