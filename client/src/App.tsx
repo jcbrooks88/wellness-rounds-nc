@@ -11,7 +11,6 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import ContactPage from "./pages/Contact";
 import AboutPage from "./pages/About";
 import DiscussionResults from "./components/discussions/DiscussionResults";
-import TimelinePage from "./pages/TimelinePage";
 import "./App.css"; // import styles here
 
 const App = () => {
@@ -26,7 +25,6 @@ const App = () => {
             <Route path="/signup" element={<SignupPage />} />
             <Route path="/about" element={<AboutPage />} />
             <Route path="/contact" element={<ContactPage />} />
-            <Route path="/timeline" element={<ProtectedRoute><TimelinePage /></ProtectedRoute>} />
             <Route path="/discussion" element={<ProtectedRoute><DiscussionPage /></ProtectedRoute>} />
             <Route path="/discussions/:id" element={<ProtectedRoute><DiscussionResults /></ProtectedRoute>} />
             <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />

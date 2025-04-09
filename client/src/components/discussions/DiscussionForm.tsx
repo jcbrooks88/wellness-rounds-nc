@@ -56,8 +56,8 @@ export default function DiscussionForm({ onDiscussionCreated }: DiscussionFormPr
 
   return (
     <form onSubmit={handleSubmit} style={formStyle}>
-      <h2>Create a Discussion</h2>
-      <input type="text" placeholder="Discussion Title" value={title} onChange={(e) => setTitle(e.target.value)} style={inputStyle} />
+      <h2>Create a Safe Space</h2>
+      <input type="text" placeholder="Topic..." value={title} onChange={(e) => setTitle(e.target.value)} style={inputStyle} />
       <textarea placeholder="Content..." value={content} onChange={(e) => setContent(e.target.value)} style={textareaStyle} />
       <div style={keywordsContainer}>
         <p>Select Keywords:</p>

@@ -32,14 +32,10 @@ const NavBar: React.FC = () => {
                 Profile
               </Link>
             </li>
+
             <li style={liStyle}>
-              <Link to="/timeline" style={linkStyle}>
-                Timeline
-              </Link>
-            </li>
-            <li style={liStyle}>
-              <Link to="/discussion" style={linkStyle}>
-                Discussions
+              <Link to="/contact" style={linkStyle}>
+                Contact Us
               </Link>
             </li>
             <li style={liStyle}>
