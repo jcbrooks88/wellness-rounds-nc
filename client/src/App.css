@@ -347,3 +347,10 @@
   background-color: #4caf50;
   color: white;
 }
+.profile-work-history {
+  margin-top: 2rem;
+}
+
+.work-history-item {
+  margin-bottom: 1rem;
+}

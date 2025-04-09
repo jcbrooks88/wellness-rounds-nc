@@ -91,6 +91,27 @@ const Profile: React.FC = () => {
               </div>
             )}
           </div>
+
+    {/* Work History Section */}
+
+    {userData.workHistory?.length > 0 && (
+      <div className="profile-work-history">
+        <h3 className="profile-subheading">Work History</h3>
+    {userData.workHistory.map((job: any, index: number) => (
+      <div key={index} className="work-history-item">
+        <p><strong>Position:</strong> {job.position}</p>
+        <p><strong>Company:</strong> {job.company}</p>
+        <p><strong>Duration:</strong>{" "}
+          {new Date(job.startDate).toLocaleDateString()} -{" "}
+          {job.endDate ? new Date(job.endDate).toLocaleDateString() : "Present"}
+        </p>
+    {job.description && <p><strong>Description:</strong> {job.description}</p>}
+        <hr />
+      </div>
+    ))}
+  </div>
+)}
+
         </div>
       ) : (
         <p className="profile-message">No user data found.</p>

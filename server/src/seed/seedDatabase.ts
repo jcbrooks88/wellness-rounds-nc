@@ -26,8 +26,27 @@ export const seedDatabase = async () => {
       password: 'password123',
       firstName: 'Jane',
       lastName: 'Doe',
-      avatar: 'https://ui-avatars.com/api/?name=Jane+Doe',
+      bio: 'Healthcare professional with a passion for mental health advocacy. Transitioning into tech!',
+      about: 'I’m a former nurse turned software developer. I love creating tools that make a difference in people’s lives.',
+      workHistory: [
+        {
+          position: 'Registered Nurse',
+          company: 'City Hospital',
+          startDate: new Date('2015-06-01'),
+          endDate: new Date('2022-08-01'),
+          description: 'Worked in ICU and emergency care, providing patient support and advocacy.'
+        },
+        {
+          position: 'Software Developer',
+          company: 'Tech Innovators',
+          startDate: new Date('2023-03-01'),
+          description: 'Currently transitioning into software development with a focus on full-stack web development.'
+        }
+      ],
+      commentsCount: 15,
+      profileComments: [],
     });
+
     await sampleUser.save();
 
     const now = new Date();

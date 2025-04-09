@@ -10,7 +10,19 @@ const userTypeDefs = gql`
     posts: [Post]
     comments: [Comment]
     discussions: [Discussion]
+    bio: String
     about: String
+    commentsCount: Int
+    profileComments: [Comment]  # if you use comments
+    workHistory: [WorkHistory]
+  }
+
+  type WorkHistory {
+    position: String
+    company: String
+    startDate: String
+    endDate: String
+    description: String
   }
 
   type Post {

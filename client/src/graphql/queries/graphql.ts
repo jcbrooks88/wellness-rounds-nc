@@ -8,6 +8,15 @@ export const GET_USER_QUERY = gql`
       email
       firstName
       lastName
+      about
+      workHistory {
+        position
+        company
+        startDate
+        endDate
+        description
+      }
+
       comments {
         _id
         content
@@ -17,6 +26,7 @@ export const GET_USER_QUERY = gql`
           title
         }
       }
+        
       discussions {
         _id
         title

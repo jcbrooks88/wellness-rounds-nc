@@ -31,6 +31,16 @@ const userSchema = new mongoose.Schema(
       required: true,
       trim: true,
     },
+    bio: { type: String},
+    workHistory: [
+      {
+        position: { type: String },
+        company: { type: String },
+        startDate: { type: Date },
+        endDate: { type: Date },
+        description: { type: String },
+      },
+    ],
     about: { type: String },
     posts: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Post' }],
     comments: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Comment' }],
