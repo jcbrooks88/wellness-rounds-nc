@@ -3,7 +3,7 @@ import { useState } from 'react';
 import CommentList from './CommentList';
 
 const PostCard = ({ post }: { post: any }) => {
-  const { title, content, author, createdAt, comments, likes = 0 } = post;
+  const { title, content, author, comments, likes = 0 } = post;
   const [likeCount, setLikeCount] = useState(likes);
 
   const handleLike = () => {
@@ -16,8 +16,7 @@ const PostCard = ({ post }: { post: any }) => {
       <div className="post-header">
         <h3>{title}</h3>
         <small>
-          by {author.firstName} {author.lastName} •{' '}
-          {new Date(createdAt).toLocaleString()}
+          by {author.firstName} {author.lastName}
         </small>
       </div>
       <p>{content}</p>

@@ -10,6 +10,7 @@
     "build": "tsc",
     "serve": "node dist/server.js",
     "clean": "rm -rf dist",
+    "seed": "ts-node src/seed/seedDatabase.ts",
     "test": "echo \"No tests yet\""
   },
   "keywords": [],

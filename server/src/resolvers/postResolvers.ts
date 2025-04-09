@@ -36,6 +36,7 @@ const postResolvers = {
         title,
         content,
         username: user.username,
+        author: user._id,
       });
 
       await newPost.save();

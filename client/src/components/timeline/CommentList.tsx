@@ -3,8 +3,7 @@ const CommentList = ({ comments }: { comments: any[] }) => {
       <div className="comment-list">
         {comments.map(comment => (
           <div key={comment._id} className="comment">
-            <p><strong>{comment.username}</strong>: {comment.content}</p>
-            <small>{new Date(comment.createdAt).toLocaleString()}</small>
+            <p><strong>{comment.firstName}</strong>: {comment.content}</p>
           </div>
         ))}
       </div>

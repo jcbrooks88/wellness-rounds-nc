@@ -6,7 +6,10 @@ const Timeline = () => {
   const { loading, error, data } = useQuery(GET_ALL_POSTS);
 
   if (loading) return <p>Loading timeline...</p>;
-  if (error) return <p>Error loading posts 😞</p>;
+  if (error) {
+    console.error('GraphQL Error:', error);
+    return <p>Error loading posts 😞</p>;
+  }
 
   return (
     <div className="timeline">

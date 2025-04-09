@@ -1,8 +1,7 @@
 
 import express from "express";
 import { ApolloServer } from "apollo-server-express";
-import seedDiscussions from "./seed/seedDiscussions.js";
-import seedPosts from "./seed/seedPosts.js";
+import { seedDatabase } from "./seed/seedDatabase.js";
 import connectDB from "./config/connection.js";
 import userTypeDefs from "./schemas/userSchema.js";
 import userResolvers from "./resolvers/userResolvers.js";
@@ -54,11 +53,8 @@ async function startServer() {
     await connectDB();
     console.log("✅ MongoDB Ready");
 
-    await seedDiscussions();
-    console.log("🌱 Discussions seeding completed");
-
-    await seedPosts();
-    console.log("🌱 Posts seeding completed");
+    await seedDatabase();
+    console.log("🌱 Database seeding completed");
 
     const server = new ApolloServer({
       typeDefs,
