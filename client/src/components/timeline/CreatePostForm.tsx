@@ -7,7 +7,6 @@ import './Timeline.css';
 
 const CreatePostForm = () => {
   const { user } = useAuth();
-  const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
 
   const [createPost, { loading, error }] = useMutation(CREATE_POST_MUTATION, {
@@ -26,12 +25,10 @@ const CreatePostForm = () => {
     try {
       await createPost({
         variables: {
-          title,
           content,
           username: user.username,
         },
       });
-      setTitle('');
       setContent('');
     } catch (err) {
       console.error("Error creating post:", err);
@@ -40,13 +37,6 @@ const CreatePostForm = () => {
 
   return (
     <form onSubmit={handleSubmit} className="post-form">
-      <input
-        type="text"
-        placeholder="Title"
-        value={title}
-        required
-        onChange={(e) => setTitle(e.target.value)}
-      />
       <textarea
         placeholder="What's on your mind?"
         value={content}

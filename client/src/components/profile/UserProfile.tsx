@@ -1,19 +1,38 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import { useAuth } from "../../context/AuthContext";
 import { graphqlMutation } from "../../utils/api";
 import { GET_USER_QUERY } from "../../graphql/queries/graphql";
 import { UPDATE_ABOUT_MUTATION } from "../../graphql/mutations/mutations";
-import "../../App.css"; 
+import "../../App.css";
+
+interface Job {
+  position: string;
+  company: string;
+  startDate: string;
+  endDate?: string;
+  description?: string;
+}
+
+interface UserData {
+  username: string;
+  email: string;
+  about?: string;
+  workHistory?: Job[];
+}
 
 const Profile: React.FC = () => {
   const { token, isAuthenticated } = useAuth();
-  const [userData, setUserData] = useState<any>(null);
-  const [, setLoading] = useState(true);
-  const [, setError] = useState<string | null>(null);
+  const [userData, setUserData] = useState<UserData | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
-  // About Me state
   const [aboutText, setAboutText] = useState("");
   const [isEditingAbout, setIsEditingAbout] = useState(false);
+
+  const headers = useMemo(
+    () => (token ? { Authorization: `Bearer ${token}` } : {}),
+    [token]
+  );
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -23,30 +42,40 @@ const Profile: React.FC = () => {
       }
 
       try {
-        const headers = token ? { Authorization: `Bearer ${token}` } : {};
-        const data = await graphqlMutation(GET_USER_QUERY, {}, headers);
+        const data = await graphqlMutation(GET_USER_QUERY, {
+          variables: {},
+          context: { headers },
+        });
+
         if (data?.me) {
           setUserData(data.me);
         }
-      } catch (err) {
+      } catch (err: any) {
+        console.error("GraphQL fetch error:", err);
+        if (err.response) {
+          console.error("Status:", err.response.status);
+          console.error("Data:", err.response.data);
+        }
         setError("Failed to fetch user data.");
-        console.error("Profile fetch error:", err);
       } finally {
         setLoading(false);
       }
     };
 
     fetchUser();
-  }, [isAuthenticated, token]);
+  }, [isAuthenticated, headers]);
 
   const handleAboutSave = async () => {
     try {
-      const variables = { about: aboutText };
-      const headers = token ? { Authorization: `Bearer ${token}` } : {};
-      const data = await graphqlMutation(UPDATE_ABOUT_MUTATION, variables, headers); // ✅ use mutation helper
-  
+      const data = await graphqlMutation(UPDATE_ABOUT_MUTATION, {
+        variables: { about: aboutText },
+        context: { headers },
+      });
+
       if (data?.updateAbout) {
-        setUserData({ ...userData, about: data.updateAbout.about });
+        setUserData((prev) =>
+          prev ? { ...prev, about: data.updateAbout.about } : prev
+        );
         setIsEditingAbout(false);
       }
     } catch (err) {
@@ -54,14 +83,44 @@ const Profile: React.FC = () => {
     }
   };
 
+  const renderWorkHistory = () =>
+    userData?.workHistory?.length ? (
+      <div className="profile-work-history">
+        <h3 className="profile-subheading">Work History</h3>
+        {userData.workHistory.map((job, index) => (
+          <div key={index} className="work-history-item">
+            <p>
+              <strong>Position:</strong> {job.position}
+            </p>
+            <p>
+              <strong>Company:</strong> {job.company}
+            </p>
+            <p>
+              <strong>Duration:</strong>{" "}
+              {new Date(job.startDate).toLocaleDateString()} -{" "}
+              {job.endDate ? new Date(job.endDate).toLocaleDateString() : "Present"}
+            </p>
+            {job.description && (
+              <p>
+                <strong>Description:</strong> {job.description}
+              </p>
+            )}
+            <hr />
+          </div>
+        ))}
+      </div>
+    ) : null;
+
+  if (loading) return <p className="profile-message">Loading...</p>;
+  if (error) return <p className="profile-message error">{error}</p>;
+
   return (
     <div className="profile-container">
       {userData ? (
-        <div>
+        <>
           <h2 className="profile-heading">{userData.username}'s Profile</h2>
           <p className="profile-info">Email: {userData.email}</p>
 
-          {/* About Me Section */}
           <div className="profile-about">
             <h3 className="profile-subheading">About Me</h3>
             {isEditingAbout ? (
@@ -92,27 +151,8 @@ const Profile: React.FC = () => {
             )}
           </div>
 
-    {/* Work History Section */}
-
-    {userData.workHistory?.length > 0 && (
-      <div className="profile-work-history">
-        <h3 className="profile-subheading">Work History</h3>
-    {userData.workHistory.map((job: any, index: number) => (
-      <div key={index} className="work-history-item">
-        <p><strong>Position:</strong> {job.position}</p>
-        <p><strong>Company:</strong> {job.company}</p>
-        <p><strong>Duration:</strong>{" "}
-          {new Date(job.startDate).toLocaleDateString()} -{" "}
-          {job.endDate ? new Date(job.endDate).toLocaleDateString() : "Present"}
-        </p>
-    {job.description && <p><strong>Description:</strong> {job.description}</p>}
-        <hr />
-      </div>
-    ))}
-  </div>
-)}
-
-        </div>
+          {renderWorkHistory()}
+        </>
       ) : (
         <p className="profile-message">No user data found.</p>
       )}

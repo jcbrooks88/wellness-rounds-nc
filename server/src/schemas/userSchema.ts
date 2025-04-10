@@ -27,7 +27,6 @@ const userTypeDefs = gql`
 
   type Post {
     _id: ID!
-    title: String!
     content: String!
     author: User!
     createdAt: String!
@@ -74,7 +73,7 @@ const userTypeDefs = gql`
     login(email: String!, password: String!): AuthPayload!
     signup(email: String!, password: String!): AuthPayload!
     addUser(username: String!, email: String!, password: String!, firstName: String!, lastName: String!): AuthPayload!
-    createPost(title: String!, content: String!): Post!
+    createPost(content: String!): Post!
     deletePost(postId: ID!): Post
     addComment(postId: ID!, content: String!): Comment!
     createDiscussion(title: String!, content: String!, keywords: [String]!): Discussion

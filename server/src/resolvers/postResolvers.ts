@@ -25,7 +25,7 @@ const postResolvers = {
   Mutation: {
     createPost: async (
       _: any,
-      { title, content }: { title: string; content: string },
+      { content }: { content: string },
       { user }: any // Access user from context
     ) => {
       if (!user) {
@@ -33,7 +33,6 @@ const postResolvers = {
       }
 
       const newPost = new Post({
-        title,
         content,
         username: user.username,
         author: user._id,

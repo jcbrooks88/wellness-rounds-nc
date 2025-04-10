@@ -90,7 +90,7 @@ console.log('discussions', discussions);
     // Seed posts
     const posts: IPost[] = await Post.insertMany([
       {
-        title: 'How I Managed Burnout in the ICU',
+
         content: 'After years working in critical care, I hit a wall. Here’s what helped me regain balance and passion for my work.',
         author: sampleUser._id,
         comments: [],
@@ -98,7 +98,7 @@ console.log('discussions', discussions);
         updatedAt: now,
       },
       {
-        title: 'From Nurse to Developer: My Career Switch Journey',
+
         content: 'Burnout led me to explore tech. It wasn’t easy, but here’s how I transitioned from bedside nursing to full-time software development.',
         author: sampleUser._id,
         comments: [],
@@ -106,7 +106,6 @@ console.log('discussions', discussions);
         updatedAt: now,
       },
       {
-        title: 'Daily Habits That Help Me Decompress After Long Shifts',
         content: 'Simple practices like breathwork, journaling, and setting boundaries have made a huge difference in my mental well-being.',
         author: sampleUser._id,
         comments: [],

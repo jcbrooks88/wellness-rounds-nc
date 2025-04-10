@@ -23,7 +23,6 @@ export const GET_USER_QUERY = gql`
         createdAt
         post {
           _id
-          title
         }
       }
         
@@ -42,7 +41,6 @@ export const GET_ALL_POSTS = gql`
   query GetAllPosts {
     getAllPosts {
       _id
-      title
       content
       createdAt
       author {
