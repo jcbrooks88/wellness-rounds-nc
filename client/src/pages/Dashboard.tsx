@@ -18,7 +18,7 @@ const Dashboard = () => {
   };
 
   return (
-    <div>
+    <div className="pages-container">
       <h1>What Space are you In?</h1>
 
     <div className="button-group">

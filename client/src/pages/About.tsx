@@ -2,11 +2,11 @@ import React from "react";
 
 const About: React.FC = () => {
   return (
+    
     <div className="about-container">
-      <h2>About Our Application</h2>
+      <h2>About Our Space</h2>
       <p>
-        Welcome to our MERN stack application! This project was built to provide
-        users with an interactive platform for discussions and collaboration.
+      Lorem ipsum dolor sit amet consectetur adipisicing elit. Officia voluptatibus quia error aut possimus temporibus, officiis obcaecati earum vel distinctio nobis in consectetur. Reprehenderit voluptatum sit excepturi eligendi beatae unde.
       </p>
       <p>
         Our mission is to create a secure and engaging environment where users

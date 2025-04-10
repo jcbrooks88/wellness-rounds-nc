@@ -1,17 +1,21 @@
 /* Root container */
 #root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background-color: #f1f5f4; /* Light neutral background */
-  color: #3b3a36; /* Darker neutral text */
-}
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 2rem;
+    text-align: center;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #3b3a36;
+    background-color: #f1f5f4;
+    background-image: url('/images/WellnessRNC.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+  }
 
 /* Navigation Bar */
 .navbar {
-  background-color: #4f4f4f; /* Darker neutral grey */
+  background-color: #3b7d7b; /* Darker neutral grey */
   padding: 12px 24px;
   display: flex;
   justify-content: center;
@@ -48,21 +52,26 @@
 .form-container {
   display: flex;
   flex-direction: column;
-  gap: 12px;
-  max-width: 600px;
+  gap: 1rem;
+  max-width: 250px;
+  align-items: center;
   margin: 2rem auto;
   padding: 24px;
   border: 1px solid #d1d1d1; /* Light neutral border */
   border-radius: 12px;
-  background-color: #ffffff;
+  background-color: #f7f7f7;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
 }
 
 .input,
 .textarea {
-  padding: 12px;
+  display: flex;
+  gap: 2px;
+  padding: 3px;
+  margin: 5px 0;
   font-size: 1rem;
   border-radius: 6px;
+  align-items: center;
   border: 1px solid #ccc;
   background-color: #f7f7f7; /* Light neutral background */
   transition: border-color 0.2s;
@@ -115,7 +124,7 @@
 .btn-edit,
 .btn-save,
 .close-button {
-  padding: 12px 18px;
+  padding: 6px 26px;
   font-size: 1rem;
   border: none;
   border-radius: 6px;
@@ -133,7 +142,7 @@
 }
 
 .safe-space-button {
-  background-color: #a3b18c; /* Pale moss green */
+  background-color: #3b7d7b; /* Pale moss green */
   color: white;
 }
 
@@ -160,12 +169,12 @@
 }
 
 .close-button {
-  background-color: #dc3545;
+  background-color: #777;
   color: white;
 }
 
 .close-button:hover {
-  background-color: #c82333;
+  background-color: #8f9a7f;
 }
 
 .button-group {
@@ -190,7 +199,7 @@
 }
 
 .modal-content {
-  background-color: #fff;
+  background-color: #a3b18c;
   padding: 30px;
   border-radius: 12px;
   width: 90%;
@@ -237,7 +246,7 @@
   border: 1px solid #ddd;
   border-radius: 10px;
   padding: 1rem;
-  background-color: #fff;
+  background-color: #a3b18c;
   width: 100%;
   max-width: 260px;
   transition: box-shadow 0.2s;
@@ -263,7 +272,7 @@
   display: inline-block;
   margin: 6px;
   padding: 6px 12px;
-  background-color: #f0f0f0;
+  background-color: #a3b18c;
   border-radius: 16px;
   cursor: pointer;
   font-size: 0.85rem;
@@ -274,7 +283,7 @@
   max-width: 800px;
   margin: 2rem auto;
   padding: 2rem;
-  background: #ffffff;
+  background: #a3b18c;
   border-radius: 12px;
   box-shadow: 0 4px 14px rgba(0, 0, 0, 0.1);
 }
@@ -323,30 +332,34 @@
 
 /* Profile Section */
 .profile-container {
-  max-width: 500px;
+  max-width: 900px;
   margin: 2rem auto;
   padding: 2rem;
   border-radius: 12px;
-  background-color: #fff;
+  background-color: #e8eedf;
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.05);
+  text-align: left;
 }
 
 .profile-heading {
   font-size: 1.5rem;
   color: #333;
   margin-bottom: 1rem;
+  text-align: right;
 }
 
 .profile-subheading {
-  font-size: 1.125rem;
+  font-size: 1.25rem;
   font-weight: 600;
   margin-top: 1.5rem;
   margin-bottom: 0.5rem;
+  text-align: center;
 }
 
 .profile-info {
   font-size: 1rem;
   color: #555;
+  text-align: right;
 }
 
 .profile-message {
@@ -383,8 +396,9 @@
   flex-direction: column;
   min-height: 100vh;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-  background-color: #f1f5f4; /* Light neutral background */
+  background-color: transparent; /* Light neutral background */
   color: #3b3a36;
+
 }
 
 /* Main Content */
@@ -395,12 +409,13 @@
   margin: 0 auto;
   width: 100%;
   transition: all 0.3s ease;
+
 }
 
 /* Typography */
 h1, h2, h3, h4, h5, h6 {
   margin-bottom: 1rem;
-  color: #222;
+  color: #444;
   font-weight: 600;
 }
 
@@ -449,7 +464,7 @@ a:hover {
 
 .contact-input:focus,
 .contact-textarea:focus {
-  border-color: #6c7740; /* Pale moss green */
+  border-color: #6c7740; 
   outline: none;
 }
 
@@ -459,7 +474,7 @@ a:hover {
 
 .contact-button {
   padding: 12px;
-  background-color: #6c7740; /* Pale moss green */
+  background-color: #2c5e5b; 
   color: white;
   border: none;
   border-radius: 6px;
@@ -468,22 +483,31 @@ a:hover {
 }
 
 .contact-button:hover {
-  background-color: #55672e; /* Darker moss green */
+  background-color: #55672e; 
 }
 
 /* About Section */
 .about-container {
   text-align: center;
-  max-width: 600px;
-  margin: 0 auto;
   padding: 20px;
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background: #a3b18c;
+  border-radius: 12px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.1);
 }
 /* Global Body */
 body {
   font-family: sans-serif;
-  background-color: #f4f4f4;
   margin: 0;
   padding: 20px;
+  background-image: url('/assets/WellnessRNC.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center top;
+  background-attachment: fixed;
+  background-color: #f9f9f9;
 }
 
 /* App Container */
@@ -501,7 +525,7 @@ body {
 
 /* Post Card */
 .post-card {
-  background: white;
+  background: #e8eedf;
   padding: 1rem;
   border-radius: 8px;
   box-shadow: 0 0 4px rgba(0, 0, 0, 0.1);
@@ -553,10 +577,18 @@ body {
 /* Post Form Button */
 .post-form button {
   padding: 0.5rem;
-  background: #3b7d7b; /* Deep blue */
+  background: #2c5e5b;
   color: white;
   border: none;
   border-radius: 4px;
   cursor: pointer;
 }
 
+.pages-container {
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background: #a3b18c;
+  border-radius: 12px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.1);
+}

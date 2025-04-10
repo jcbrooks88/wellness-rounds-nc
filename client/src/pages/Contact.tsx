@@ -15,6 +15,7 @@ const Contact: React.FC = () => {
   };
 
   return (
+    <div className="pages-container">
     <div className="contact-container">
       <h2>Contact Us</h2>
       <p>We’d love to hear from you! Fill out the form below to get in touch.</p>
@@ -47,6 +48,7 @@ const Contact: React.FC = () => {
         />
         <button type="submit" className="contact-button">Send Message</button>
       </form>
+    </div>
     </div>
   );
 };
