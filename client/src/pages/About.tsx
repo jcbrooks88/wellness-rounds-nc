@@ -2,7 +2,7 @@ import React from "react";
 
 const About: React.FC = () => {
   return (
-    <div style={containerStyle}>
+    <div className="about-container">
       <h2>About Our Application</h2>
       <p>
         Welcome to our MERN stack application! This project was built to provide
@@ -18,13 +18,6 @@ const About: React.FC = () => {
       </p>
     </div>
   );
-};
-
-const containerStyle = {
-  textAlign: "center" as const,
-  maxWidth: "600px",
-  margin: "0 auto",
-  padding: "20px",
 };
 
 export default About;

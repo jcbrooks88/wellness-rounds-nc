@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { CREATE_POST_MUTATION } from '../../graphql/mutations/mutations';
 import { GET_ALL_POSTS } from '../../graphql/queries/graphql';
 import { useAuth } from '../../context/AuthContext';
-import './Timeline.css';
+import '../../App.css';
 
 const CreatePostForm = () => {
   const { user } = useAuth();

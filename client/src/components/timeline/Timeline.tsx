@@ -1,6 +1,7 @@
 import { useQuery } from '@apollo/client';
 import { GET_ALL_POSTS } from '../../graphql/queries/graphql';
 import PostCard from './PostCard';
+import '../../App.css';
 
 const Timeline = () => {
   const { loading, error, data } = useQuery(GET_ALL_POSTS);
@@ -12,7 +13,7 @@ const Timeline = () => {
   }
 
   return (
-    <div className="timeline">
+    <div className="timeline-container">
       {data.getAllPosts.map((post: any) => (
         <PostCard key={post._id} post={post} />
       ))}

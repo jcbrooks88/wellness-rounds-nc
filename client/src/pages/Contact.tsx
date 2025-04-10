@@ -15,10 +15,10 @@ const Contact: React.FC = () => {
   };
 
   return (
-    <div style={containerStyle}>
+    <div className="contact-container">
       <h2>Contact Us</h2>
       <p>We’d love to hear from you! Fill out the form below to get in touch.</p>
-      <form onSubmit={handleSubmit} style={formStyle}>
+      <form onSubmit={handleSubmit} className="contact-form">
         <input
           type="text"
           name="name"
@@ -26,7 +26,7 @@ const Contact: React.FC = () => {
           value={formData.name}
           onChange={handleChange}
           required
-          style={inputStyle}
+          className="contact-input"
         />
         <input
           type="email"
@@ -35,7 +35,7 @@ const Contact: React.FC = () => {
           value={formData.email}
           onChange={handleChange}
           required
-          style={inputStyle}
+          className="contact-input"
         />
         <textarea
           name="message"
@@ -43,44 +43,12 @@ const Contact: React.FC = () => {
           value={formData.message}
           onChange={handleChange}
           required
-          style={textareaStyle}
+          className="contact-textarea"
         />
-        <button type="submit" style={buttonStyle}>Send Message</button>
+        <button type="submit" className="contact-button">Send Message</button>
       </form>
     </div>
   );
-};
-
-const containerStyle = {
-  textAlign: "center" as const,
-  maxWidth: "500px",
-  margin: "0 auto",
-  padding: "20px",
-};
-
-const formStyle = {
-  display: "flex",
-  flexDirection: "column" as const,
-  gap: "10px",
-};
-
-const inputStyle = {
-  padding: "10px",
-  fontSize: "16px",
-  width: "100%",
-};
-
-const textareaStyle = {
-  ...inputStyle,
-  height: "100px",
-};
-
-const buttonStyle = {
-  padding: "10px",
-  backgroundColor: "#007BFF",
-  color: "white",
-  border: "none",
-  cursor: "pointer",
 };
 
 export default Contact;
