@@ -16,18 +16,22 @@ import rootTypeDefs from "./schemas/rootSchema.js";
 import { authMiddleware } from "./middleware/authMiddleware.js";
 import dotenv from "dotenv";
 import merge from "lodash.merge";
+import cors from "cors";
 
 dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 4000;
 
-// Resolve __dirname in ES modules
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-
 // JSON middleware
 app.use(express.json());
+
+app.use(
+  cors({
+    origin: process.env.FRONTEND_URL || "http://localhost:5173",
+    credentials: true,
+  })
+);
 
 // Apollo setup
 const typeDefs = [
@@ -64,22 +68,17 @@ async function startServer() {
     await server.start();
     server.applyMiddleware({ app, path: "/graphql" });
 
-    // Serve static frontend in production
-    if (process.env.NODE_ENV === "production") {
-      const clientPath = path.resolve(__dirname, "../client/dist");
-      app.use(express.static(clientPath));
+ // Optional message in production
+ if (process.env.NODE_ENV === "production") {
+  console.log("🌐 Production mode - frontend is hosted separately.");
+}
 
-      app.get("*", (_req, res) => {
-        res.sendFile(path.join(clientPath, "index.html"));
-      });
-    }
-
-    app.listen(PORT, () => {
-      console.log(`🚀 Server running at http://localhost:${PORT}${server.graphqlPath}`);
-    });
-  } catch (error) {
-    console.error("❌ Server startup error:", error);
-  }
+app.listen(PORT, () => {
+  console.log(`🚀 Server running at http://localhost:${PORT}${server.graphqlPath}`);
+});
+} catch (error) {
+console.error("❌ Server startup error:", error);
+}
 }
 
 startServer();
