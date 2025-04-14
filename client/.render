@@ -1,0 +1,11 @@
+[build]
+command = "npm install && npm --prefix client run build && npm --prefix server install"
+
+[start]
+command = "npm --prefix server start"
+
+[env]
+NODE_ENV = "production"
+
+[tools]
+node = "20"
