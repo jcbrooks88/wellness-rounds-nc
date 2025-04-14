@@ -1,6 +1,4 @@
 import express from "express";
-import path from "path";
-import { fileURLToPath } from "url";
 import { ApolloServer } from "apollo-server-express";
 import { seedDatabase } from "./seed/seedDatabase.js";
 import connectDB from "./config/connection.js";
@@ -17,6 +15,7 @@ import { authMiddleware } from "./middleware/authMiddleware.js";
 import dotenv from "dotenv";
 import merge from "lodash.merge";
 import cors from "cors";
+import mongoose from "mongoose";
 
 dotenv.config();
 
@@ -72,6 +71,7 @@ async function startServer() {
  // Optional message in production
  if (process.env.NODE_ENV === "production") {
   console.log("🌐 Production mode - frontend is hosted separately.");
+  await mongoose.connection.dropDatabase();
 }
 
 app.listen(PORT, () => {
