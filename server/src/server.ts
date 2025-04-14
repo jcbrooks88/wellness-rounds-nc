@@ -1,5 +1,6 @@
 import express from "express";
 import path from "path";
+import { fileURLToPath } from "url";
 import { ApolloServer } from "apollo-server-express";
 import { seedDatabase } from "./seed/seedDatabase.js";
 import connectDB from "./config/connection.js";
@@ -15,21 +16,20 @@ import rootTypeDefs from "./schemas/rootSchema.js";
 import { authMiddleware } from "./middleware/authMiddleware.js";
 import dotenv from "dotenv";
 import merge from "lodash.merge";
-import { fileURLToPath } from "url";
-import { dirname } from "path";
 
 dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 4000;
 
-// Get __dirname for ESModules
+// Resolve __dirname in ES modules
 const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
+const __dirname = path.dirname(__filename);
 
+// JSON middleware
 app.use(express.json());
 
-// Combine typeDefs and resolvers
+// Apollo setup
 const typeDefs = [
   rootTypeDefs,
   userTypeDefs,
@@ -64,17 +64,14 @@ async function startServer() {
     await server.start();
     server.applyMiddleware({ app, path: "/graphql" });
 
-    // Conditional Logic - Serve frontend only in production
+    // Serve static frontend in production
     if (process.env.NODE_ENV === "production") {
-      const distPath = path.resolve(__dirname, "../client/dist");
-      app.use(express.static(distPath));
+      const clientPath = path.resolve(__dirname, "../client/dist");
+      app.use(express.static(clientPath));
 
-      // Fallback for React Router routes
       app.get("*", (_req, res) => {
-        res.sendFile(path.join(distPath, "index.html"));
+        res.sendFile(path.join(clientPath, "index.html"));
       });
-
-      console.log("🌐 Serving static files from /client/dist");
     }
 
     app.listen(PORT, () => {
