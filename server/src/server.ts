@@ -60,6 +60,7 @@ async function startServer() {
     const server = new ApolloServer({
       typeDefs,
       resolvers,
+      persistedQueries: false,
       context: ({ req }) => {
         return { user: authMiddleware({ req }).user };
       },

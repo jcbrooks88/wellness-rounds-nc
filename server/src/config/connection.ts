@@ -19,8 +19,6 @@ const connectDB = async () => {
 
   try {
     await mongoose.connect(MONGODB_URI, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
     } as any); // Add options as needed
     isConnected = true;
     console.log("✅ MongoDB Connected");
